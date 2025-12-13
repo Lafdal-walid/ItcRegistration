@@ -66,10 +66,10 @@ const ToRegister = () => {
           variant="h2"
           sx={{
             fontFamily: '"Poppins-Regular", sans-serif',
-            fontSize: screenWidth > 776 ? "58px" : "40px",
+            fontSize: screenWidth > 776 ? "52px" : "38px",
             fontWeight: 400,
-            marginBottom: "60px",
-            marginTop: screenWidth > 776 ? "-58px" : "-100px",
+            marginBottom: "30px",
+            marginTop: screenWidth > 776 ? "100px" : "30px",
             lineHeight: screenWidth > 776 ? "60px" : "55px",
             background: "#FFFFFF",
             WebkitBackgroundClip: "text",
