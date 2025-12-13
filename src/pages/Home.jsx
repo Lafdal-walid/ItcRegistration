@@ -250,14 +250,15 @@ const Home = () => {
           flexWrap: "wrap",
           gap: "50px",
           marginTop: "40px",
+          padding : "15px",
         }}
       >
         {[1, 2, 3, 4, 5].map((item) => (
           <Box
             key={item}
             sx={{
-              width: screenWidth > 776 ? "100px" : "80px",
-              height: screenWidth > 776 ? "100px" : "80px",
+              width: screenWidth > 776 ? "100px" : "60px",
+              height: screenWidth > 776 ? "100px" : "60px",
               borderRadius: "50%",
               backgroundColor: "#D9D9D966",
               flex: "0 0 auto",

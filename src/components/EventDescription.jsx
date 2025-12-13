@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import bk2 from "../assets/bk2.png";
 import Logo2 from "../assets/Logo2.svg";
@@ -13,7 +13,14 @@ import ve3 from "../assets/cards/ve3.svg";
 import ve4 from "../assets/cards/ve4.svg";
 
 const EventDescription = ({ pb = {} }) => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const paddingBottom = typeof pb === 'string' ? pb : pb.pb || '900px';
+  
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   return (
     <Box
@@ -110,7 +117,7 @@ const EventDescription = ({ pb = {} }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "10px",
+          gap: screenWidth > 992 ? "10px" : "30px",
           zIndex: 2,
         }}
       >
@@ -119,14 +126,10 @@ const EventDescription = ({ pb = {} }) => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            gap: "10px",
+            gap: screenWidth > 992 ? "10px" : "30px",
             alignItems: "flex-start",
-
-            "@media (max-width: 992px)": {
-              flexDirection: "column",
-              width: "100%",
-              alignItems: "center",
-            },
+            flexDirection: screenWidth > 992 ? "row" : "column",
+            width: screenWidth > 992 ? "auto" : "100%",
           }}
         >
           <CardPro
@@ -151,17 +154,11 @@ const EventDescription = ({ pb = {} }) => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            gap: "10px",
+            gap: screenWidth > 992 ? "10px" : "30px",
             alignItems: "flex-start",
-            marginTop: "10px",
-
-
-            "@media (max-width: 992px)": {
-              marginTop: "0px",
-              flexDirection: "column",
-              width: "100%",
-              alignItems: "center",
-            },
+            marginTop: screenWidth > 992 ? "20px" : "0px",
+            flexDirection: screenWidth > 992 ? "row" : "column",
+            width: screenWidth > 992 ? "auto" : "100%",
           }}
         >
           <CardPro

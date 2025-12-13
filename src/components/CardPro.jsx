@@ -1,7 +1,13 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const CardPro = ({ title = "", description = "", icon, background, width = "450px" }) => {
+const CardPro = ({
+  title = "",
+  description = "",
+  icon,
+  background,
+  width = "450px",
+}) => {
   const safeWidth = typeof width === "string" ? width : `${width}px`;
 
   return (
@@ -76,6 +82,11 @@ const CardPro = ({ title = "", description = "", icon, background, width = "450p
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+
+          "@media (max-width: 776px)": {
+            left: "50%",
+            transform: "translateX(-50%)",
+          },
         }}
       >
         {/* Glow */}
@@ -119,6 +130,13 @@ const CardPro = ({ title = "", description = "", icon, background, width = "450p
           color: "#FFFFFF",
           whiteSpace: "nowrap",
           zIndex: 2,
+
+          "@media (max-width: 776px)": {
+            left: "50%",
+            transform: "translateX(-50%)",
+            textAlign: "center",
+            fontSize: "12.6px", // 30% reduction from 18px
+          },
         }}
       >
         {title}
@@ -136,6 +154,13 @@ const CardPro = ({ title = "", description = "", icon, background, width = "450p
           color: "#BAB9B9",
           whiteSpace: "nowrap",
           zIndex: 2,
+
+          "@media (max-width: 776px)": {
+            left: "50%",
+            transform: "translateX(-50%)",
+            textAlign: "center",
+            fontSize: "8.4px", // 30% reduction from 12px
+          },
         }}
       >
         {description}
