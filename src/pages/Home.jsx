@@ -155,7 +155,7 @@ const Home = () => {
         variant="body1"
         sx={{
           fontFamily: "Poppins",
-          fontSize: "30px",
+          fontSize: screenWidth > 776 ? "30px" : "22px",
           fontWeight: 500,
           marginBottom: "20px",
           opacity: 0.9,
@@ -164,6 +164,7 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          padding: "10px",
         }}
       >
         Hosted in Partnership with
@@ -183,7 +184,7 @@ const Home = () => {
           alt="CodeandSens"
           style={{
             maxWidth: "100%",
-            height: "60px",
+            height:screenWidth > 776 ? "60px" : "45px",
           }}
         />
       </Box>
@@ -192,21 +193,35 @@ const Home = () => {
         variant="body1"
         sx={{
           fontFamily: "Poppins",
-          fontSize: "16px",
+          fontSize: screenWidth > 776 ? "16px" : "10px",
           fontWeight: 400,
           marginBottom: "20px",
           opacity: 0.9,
           color: "#BAB9B9",
-          marginTop: "30px",
+          marginTop: "20px",
           textAlign: "center",
+          padding: "20px",
         }}
       >
-        We are proud to collaborate with Code & Sens, a leading private school
-        offering accessible, flexible, and career-<br></br>oriented training.
-        Their mission is to make tech education available to everyone . Thanks
-        to their adaptable, hands-<br></br>on learning approach, Code & Sens is
-        the perfect environment to host a competition that empowers beginners to{" "}
-        <br></br>grow, create, and challenge themselves.
+        {screenWidth > 776 ? (
+          <>
+            We are proud to collaborate with Code & Sens, a leading private school
+            offering accessible, flexible, and career-<br></br>oriented training.
+            Their mission is to make tech education available to everyone . Thanks
+            to their adaptable, hands-<br></br>on learning approach, Code & Sens is
+            the perfect environment to host a competition that empowers beginners to{" "}
+            <br></br>grow, create, and challenge themselves.
+          </>
+        ) : (
+          <>
+            We are proud to collaborate with Code & Sens, a leading private school
+            offering accessible, flexible, and career-oriented training.
+            Their mission is to make tech education available to everyone . Thanks
+            to their adaptable, hands-on learning approach, Code & Sens is
+            the perfect environment to host a competition that empowers beginners to
+            grow, create, and challenge themselves.
+          </>
+        )}
       </Typography>
 
       <Typography
@@ -233,17 +248,16 @@ const Home = () => {
           justifyContent: "center",
           alignItems: "center",
           flexWrap: "wrap",
-          gap: "100px",
+          gap: "50px",
           marginTop: "40px",
-          marginBottom: "50px",
         }}
       >
         {[1, 2, 3, 4, 5].map((item) => (
           <Box
             key={item}
             sx={{
-              width: "100px",
-              height: "100px",
+              width: screenWidth > 776 ? "100px" : "80px",
+              height: screenWidth > 776 ? "100px" : "80px",
               borderRadius: "50%",
               backgroundColor: "#D9D9D966",
               flex: "0 0 auto",
@@ -275,7 +289,7 @@ const Home = () => {
           fontFamily: "Poppins",
           fontSize: screenWidth > 650 ? "16px" : "10px",
           fontWeight: 400,
-          mb: "20px",
+          mb: "10px",
           mt: "20px",
           opacity: 0.9,
           color: "#BAB9B9",
@@ -296,8 +310,8 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: "50px",
-          marginBottom: "50px",
+          marginTop: "30px",
+          marginBottom: "30px",
 
         }}
       >
