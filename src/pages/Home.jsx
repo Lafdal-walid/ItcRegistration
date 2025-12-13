@@ -36,8 +36,10 @@ const Home = () => {
 
   const getMaxWidth = () => {
     if (screenWidth > 992) return "1500px";
-    if (screenWidth > 776) return "1350px";
-    return "800px";
+    if (screenWidth > 776) return "1300px";
+    if (screenWidth > 650) return "1200px";
+    if (screenWidth > 450) return "850px";
+    return "700px";
   };
 
   const toggleDrawer = (open) => (event) => {
