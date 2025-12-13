@@ -19,12 +19,16 @@ import Agenda from "../assets/Agenda.svg";
 const Home = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
 
   React.useEffect(() => {
     setIsMobile(window.innerWidth < 992);
+    setScreenSize(window.innerWidth);
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 992);
+      const width = window.innerWidth;
+      setIsMobile(width < 992);
+      setScreenSize(width);
     };
 
     window.addEventListener("resize", handleResize);
@@ -293,7 +297,8 @@ const Home = () => {
           src={Agenda}
           alt="Agenda"
           style={{
-            maxWidth: "auto",
+            maxWidth: screenSize >= 992 ? "1500px" : screenSize >= 776 ? "1350px" : "1050px",
+            width: "auto",
             height: "auto",
           }}
         />
