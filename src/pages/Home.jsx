@@ -273,7 +273,7 @@ const Home = () => {
       <Box
         sx={{
           fontFamily: "Poppins",
-          fontSize: "16px",
+          fontSize: screenWidth > 650 ? "16px" : "10px",
           fontWeight: 400,
           mb: "20px",
           mt: "20px",
