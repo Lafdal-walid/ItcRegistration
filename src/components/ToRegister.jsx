@@ -43,8 +43,8 @@ const ToRegister = () => {
           top: "50%",
           left: "50%",
           right: "50%",
-          transform: "translate(-50%, -50%)",
-          maxWidth: "60%",
+          transform: "translate(-50%, -100%)",
+          maxWidth: screenWidth > 776 ? "60%" : "80%",
           maxHeight: "60%",
           zIndex: 1,
         }}
@@ -66,7 +66,7 @@ const ToRegister = () => {
           variant="h2"
           sx={{
             fontFamily: '"Poppins-Regular", sans-serif',
-            fontSize: screenWidth > 776 ? "52px" : "30px",
+            fontSize: screenWidth > 776 ? "52px" : "33px",
             fontWeight: 400,
             marginBottom: "30px",
             marginTop: screenWidth > 776 ? "100px" : "0px",
