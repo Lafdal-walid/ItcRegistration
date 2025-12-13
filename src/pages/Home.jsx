@@ -19,21 +19,26 @@ import Agenda from "../assets/Agenda.svg";
 const Home = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   React.useEffect(() => {
     setIsMobile(window.innerWidth < 992);
-    setScreenSize(window.innerWidth);
+    setScreenWidth(window.innerWidth);
 
     const handleResize = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < 992);
-      setScreenSize(width);
+      setIsMobile(window.innerWidth < 992);
+      setScreenWidth(window.innerWidth);
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const getMaxWidth = () => {
+    if (screenWidth > 992) return "1500px";
+    if (screenWidth > 776) return "1350px";
+    return "800px";
+  };
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -297,7 +302,7 @@ const Home = () => {
           src={Agenda}
           alt="Agenda"
           style={{
-            maxWidth: screenSize >= 992 ? "1500px" : screenSize >= 776 ? "1350px" : "1050px",
+            maxWidth: getMaxWidth(),
             width: "auto",
             height: "auto",
           }}
