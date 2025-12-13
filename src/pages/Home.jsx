@@ -137,7 +137,7 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: "40px",
+          marginTop: screenWidth > 776 ? "00px" : "60px",
           marginBottom: "20px",
         }}
       >
@@ -193,14 +193,15 @@ const Home = () => {
         variant="body1"
         sx={{
           fontFamily: "Poppins",
-          fontSize: screenWidth > 776 ? "16px" : "10px",
+          fontSize: screenWidth > 776 ? "16px" : "14px",
           fontWeight: 400,
           marginBottom: "20px",
           opacity: 0.9,
           color: "#BAB9B9",
-          marginTop: "20px",
+          marginTop: screenWidth > 776 ? "40px" : "30px",
           textAlign: "center",
-          padding: "20px",
+          paddingLeft: "50px",
+          paddingRight: "50px",
         }}
       >
         {screenWidth > 776 ? (
@@ -248,9 +249,9 @@ const Home = () => {
           justifyContent: "center",
           alignItems: "center",
           flexWrap: "wrap",
-          gap: "50px",
+          gap: screenWidth > 776 ? "100px" : "50px" ,
           marginTop: "40px",
-          padding : "15px",
+          padding : screenWidth > 776 ? "15px": "30px",
         }}
       >
         {[1, 2, 3, 4, 5].map((item) => (

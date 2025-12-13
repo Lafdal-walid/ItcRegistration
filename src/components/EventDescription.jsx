@@ -14,14 +14,14 @@ import ve4 from "../assets/cards/ve4.svg";
 
 const EventDescription = ({ pb = {} }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const paddingBottom = typeof pb === 'string' ? pb : pb.pb || '900px';
-  
+  const paddingBottom = typeof pb === "string" ? pb : pb.pb || "900px";
+
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
+
   return (
     <Box
       sx={{
@@ -33,7 +33,7 @@ const EventDescription = ({ pb = {} }) => {
         padding: "80px 20px",
         boxSizing: "border-box",
         paddingBottom: paddingBottom,
-        
+
         "@media (max-width: 992px)": {
           paddingBottom: "1250px",
         },
@@ -59,7 +59,7 @@ const EventDescription = ({ pb = {} }) => {
       <Box
         sx={{
           position: "absolute",
-          top: "225px",
+          top: "190px",
           left: "50%",
           transform: "translate(-50%, -50%)",
           textAlign: "center",
@@ -71,17 +71,21 @@ const EventDescription = ({ pb = {} }) => {
           component="img"
           src={Logo2}
           alt="Logo2"
-          sx={{ width: "90px", height: "90px" }}
+          sx={{
+            width: "90px",
+            height: "90px",
+            marginBottom: screenWidth > 776 ? "15px" : "0px",
+          }}
         />
 
         <Typography
           variant="h2"
           sx={{
             fontFamily: '"Poppins-Regular", sans-serif',
-            fontSize: "30px",
+            fontSize: screenWidth > 776 ? "28px" : "22px",
             fontWeight: 400,
-            marginBottom: "1rem",
-            lineHeight: "45px",
+            marginBottom: "30px",
+            lineHeight: "30px",
             background: "#BAB9B9",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -94,16 +98,16 @@ const EventDescription = ({ pb = {} }) => {
           variant="body1"
           sx={{
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: screenWidth > 776 ? "14px" : "12px",
             fontWeight: 400,
-            marginBottom: "2.5rem",
             opacity: 0.9,
             color: "#BAB9B9",
-            marginTop: "20px",
+            marginTop: "30px",
           }}
         >
-          Compete and level up. Solve complex, real-life problems using any<br />
-          programming language you choose. Your next breakthrough starts here.
+          Compete and level up. Solve complex, real-life problems using an
+          programming <br></br> language you choose. Your next breakthrough
+          starts here.
         </Typography>
       </Box>
 
@@ -111,7 +115,7 @@ const EventDescription = ({ pb = {} }) => {
       <Box
         sx={{
           position: "absolute",
-          top: "450px",
+          top: "400px",
           left: "20px",
           right: "20px",
           display: "flex",
@@ -135,7 +139,13 @@ const EventDescription = ({ pb = {} }) => {
           <CardPro
             title="Any programming language"
             description="Python, C++, JavaScript—use what makes you fast."
-            icon={<Box component="img" src={ic1} sx={{ width: "100%", height: "100%" }} />}
+            icon={
+              <Box
+                component="img"
+                src={ic1}
+                sx={{ width: "100%", height: "100%" }}
+              />
+            }
             background={ve1}
             width="400px"
           />
@@ -143,7 +153,13 @@ const EventDescription = ({ pb = {} }) => {
           <CardPro
             title="Real problems"
             description="Solve complex, real-life challenges that matter."
-            icon={<Box component="img" src={ic2} sx={{ width: "100%", height: "100%" }} />}
+            icon={
+              <Box
+                component="img"
+                src={ic2}
+                sx={{ width: "100%", height: "100%" }}
+              />
+            }
             background={ve2}
             width="600px"
           />
@@ -164,7 +180,13 @@ const EventDescription = ({ pb = {} }) => {
           <CardPro
             title="Compete & win"
             description="Battle against the best coders worldwide."
-            icon={<Box component="img" src={ic3} sx={{ width: "100%", height: "100%" }} />}
+            icon={
+              <Box
+                component="img"
+                src={ic3}
+                sx={{ width: "100%", height: "100%" }}
+              />
+            }
             background={ve3}
             width="600px"
           />
@@ -172,7 +194,13 @@ const EventDescription = ({ pb = {} }) => {
           <CardPro
             title="Level up"
             description="Push your skills to the next level."
-            icon={<Box component="img" src={ic4} sx={{ width: "100%", height: "100%" }} />}
+            icon={
+              <Box
+                component="img"
+                src={ic4}
+                sx={{ width: "100%", height: "100%" }}
+              />
+            }
             background={ve4}
             width="400px"
           />

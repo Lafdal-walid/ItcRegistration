@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import bkImage from "../assets/bkImage.png";
 import overlayImage from "../assets/overlayImage.png";
 
 const ToRegister = () => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <Box
       sx={{
@@ -25,7 +32,6 @@ const ToRegister = () => {
           width: "100%",
           height: "100%",
           objectFit: "cover",
-
         }}
       />
       <Box
@@ -60,34 +66,40 @@ const ToRegister = () => {
           variant="h2"
           sx={{
             fontFamily: '"Poppins-Regular", sans-serif',
-            fontSize: "58px",
+            fontSize: screenWidth > 776 ? "58px" : "40px",
             fontWeight: 400,
-            marginBottom: "1rem",
-            lineHeight: "60px",
+            marginBottom: "60px",
+            marginTop: screenWidth > 776 ? "-58px" : "-100px",
+            lineHeight: screenWidth > 776 ? "60px" : "55px",
             background: "#FFFFFF",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
           }}
         >
-          The Coding Challenge That<br></br> Pushes Your Limits
+          {screenWidth > 776 ? (
+            <>
+              The Coding Challenge That<br></br> Pushes Your Limits
+            </>
+          ) : (
+            "The Coding Challenge That Pushes Your Limits"
+          )}
         </Typography>
 
         <Typography
           variant="body1"
           sx={{
             fontFamily: "Poppins",
-            fontSize: "17px",
+            fontSize: screenWidth > 776 ? "18px" : "15px",
             fontWeight: 400,
-            marginBottom: "2.5rem",
+            marginBottom: "60px",
+            marginTop: screenWidth > 776 ? "25px" : "30px",
             opacity: 0.9,
             color: "#555555",
-            marginTop: "25px",
           }}
         >
           Problem-solving competition. Real problems. Real solutions. Code in
-          any language Push your logc, speed, and creativity to the next
-          level.
+          any language Push your logc, speed, and creativity to the next level.
         </Typography>
 
         <Button

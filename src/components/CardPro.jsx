@@ -135,7 +135,7 @@ const CardPro = ({
             left: "50%",
             transform: "translateX(-50%)",
             textAlign: "center",
-            fontSize: "12.6px", // 30% reduction from 18px
+            fontSize: "14px", 
           },
         }}
       >
@@ -159,7 +159,7 @@ const CardPro = ({
             left: "50%",
             transform: "translateX(-50%)",
             textAlign: "center",
-            fontSize: "8.4px", // 30% reduction from 12px
+            fontSize: "11px", 
           },
         }}
       >
