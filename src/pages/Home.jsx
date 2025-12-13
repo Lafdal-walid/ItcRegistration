@@ -15,6 +15,12 @@ import EventDescription from "../components/EventDescription.jsx";
 import Logo3 from "../assets/Logo3.svg";
 import CodeandSens from "../assets/code & sens.svg";
 import Agenda from "../assets/Agenda.svg";
+import Map from "../assets/Map.svg";
+import TimerLogo from "../assets/TimerLogo.svg";
+import rightBK from "../assets/rightBK.svg";
+import leftBK from "../assets/leftBK.svg";
+import bkMed from "../assets/bkMed.svg";
+import CountdownCard from "../components/CountdownCard.jsx";
 
 const Home = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -184,7 +190,7 @@ const Home = () => {
           alt="CodeandSens"
           style={{
             maxWidth: "100%",
-            height:screenWidth > 776 ? "60px" : "45px",
+            height: screenWidth > 776 ? "60px" : "45px",
           }}
         />
       </Box>
@@ -206,21 +212,22 @@ const Home = () => {
       >
         {screenWidth > 776 ? (
           <>
-            We are proud to collaborate with Code & Sens, a leading private school
-            offering accessible, flexible, and career-<br></br>oriented training.
-            Their mission is to make tech education available to everyone . Thanks
-            to their adaptable, hands-<br></br>on learning approach, Code & Sens is
-            the perfect environment to host a competition that empowers beginners to{" "}
-            <br></br>grow, create, and challenge themselves.
+            We are proud to collaborate with Code & Sens, a leading private
+            school offering accessible, flexible, and career-<br></br>oriented
+            training. Their mission is to make tech education available to
+            everyone . Thanks to their adaptable, hands-<br></br>on learning
+            approach, Code & Sens is the perfect environment to host a
+            competition that empowers beginners to <br></br>grow, create, and
+            challenge themselves.
           </>
         ) : (
           <>
-            We are proud to collaborate with Code & Sens, a leading private school
-            offering accessible, flexible, and career-oriented training.
-            Their mission is to make tech education available to everyone . Thanks
-            to their adaptable, hands-on learning approach, Code & Sens is
-            the perfect environment to host a competition that empowers beginners to
-            grow, create, and challenge themselves.
+            We are proud to collaborate with Code & Sens, a leading private
+            school offering accessible, flexible, and career-oriented training.
+            Their mission is to make tech education available to everyone .
+            Thanks to their adaptable, hands-on learning approach, Code & Sens
+            is the perfect environment to host a competition that empowers
+            beginners to grow, create, and challenge themselves.
           </>
         )}
       </Typography>
@@ -249,9 +256,9 @@ const Home = () => {
           justifyContent: "center",
           alignItems: "center",
           flexWrap: "wrap",
-          gap: screenWidth > 776 ? "100px" : "50px" ,
+          gap: screenWidth > 776 ? "100px" : "50px",
           marginTop: "40px",
-          padding : screenWidth > 776 ? "15px": "30px",
+          padding: screenWidth > 776 ? "15px" : "30px",
         }}
       >
         {[1, 2, 3, 4, 5].map((item) => (
@@ -277,7 +284,7 @@ const Home = () => {
           marginBottom: "20px",
           opacity: 0.9,
           color: "#BAB9B9",
-          marginTop: "100px",
+          marginTop: screenWidth > 776 ? "110px" : "40px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -314,7 +321,6 @@ const Home = () => {
           alignItems: "center",
           marginTop: "30px",
           marginBottom: "30px",
-
         }}
       >
         <img
@@ -324,9 +330,214 @@ const Home = () => {
             maxWidth: getMaxWidth(),
             width: "auto",
             height: "auto",
-            marginLeft: '20px'
+            marginLeft: "20px",
           }}
         />
+      </Box>
+
+      <Typography
+        variant="body1"
+        sx={{
+          fontFamily: "Poppins",
+          fontSize: screenWidth > 776 ? "45px" : "28px",
+          fontWeight: 600,
+          marginBottom: "20px",
+          opacity: 0.9,
+          color: "#BAB9B9",
+          marginTop: screenWidth > 776 ? "-40px" : "-40px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Location
+      </Typography>
+      <Typography
+        variant="body1"
+        sx={{
+          fontFamily: "Poppins",
+          fontSize: screenWidth > 776 ? "18px" : "10px",
+          fontWeight: 600,
+          marginBottom: "px",
+          opacity: 0.9,
+          color: "#BAB9B9",
+          marginTop: screenWidth > 776 ? "0px" : "-10px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        The N 1, lot alioua fodil, Chéraga 16014, Algiers
+      </Typography>
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: screenWidth > 776 ? "0px" : "20px",
+          marginBottom: "20px",
+        }}
+      >
+        <img
+          src={Map}
+          alt="Map"
+          style={{
+            maxWidth: "85%",
+            height: "100%",
+          }}
+        />
+      </Box>
+
+      {/* Timer Section with Background Overlay */}
+      <Box
+        sx={{
+          position: "relative",
+          width: "100vw",
+          minHeight: "100vh",
+          backgroundColor: "#000000",
+          margin: 0,
+          padding: "80px 20px",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Background Images */}
+        <Box
+          component="img"
+          src={bkMed}
+          alt="background"
+          sx={{
+            position: "absolute",
+            top: screenWidth > 776 ? "47%" : "35%",
+            left: "50%",
+            transform: "translate(-50%, -60%)",
+            width: screenWidth > 776 ? "90vw" : "90vw",
+            height: screenWidth > 776 ? "40vh" : "40vh",
+            objectFit: "contain",
+            zIndex: 1,
+          }}
+        />
+        <Box
+          component="img"
+          src={leftBK}
+          alt="left background"
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: screenWidth > 776 ? "50vw" : "40vw",
+            height: screenWidth > 776 ? "100vh" : "100vh",
+            objectFit: "cover",
+            zIndex: 2,
+          }}
+        />
+        <Box
+          component="img"
+          src={rightBK}
+          alt="right background"
+          sx={{
+            position: "absolute",
+            top: 0,
+            right: screenWidth > 776 ? 0 : "0px",
+            width: screenWidth > 776 ? "50vw" : "40vw",
+            height: screenWidth > 776 ? "100vh" : "100vh",
+            objectFit: "cover",
+            zIndex: 2,
+          }}
+        />
+
+        {/* Content */}
+        <Box
+          sx={{
+            position: "absolute",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 10,
+            left: "50%",
+            top: screenWidth > 776 ? "220px" : "150px",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: screenWidth > 776 ? "20px" : "20px",
+              marginBottom: screenWidth > 776 ? "20px" : "0px",
+            }}
+          >
+            <img
+              src={TimerLogo}
+              alt="TimerLogo"
+              style={{
+                maxWidth: screenWidth > 776 ? "300px" : "130px",
+                height: screenWidth > 776 ? "80px" : "45px",
+                marginBottom :screenWidth > 776 ? "0px" : "20px",
+                marginTop :"30px",
+
+              }}
+            />
+          </Box>
+
+          <Typography
+            variant="body1"
+            sx={{
+              fontFamily: "Poppins",
+              fontSize: screenWidth > 776 ? "45px" : "20px",
+              fontWeight: 600,
+              marginBottom: "20px",
+              opacity: 0.9,
+              color: "#BAB9B9",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            The battle begins in
+          </Typography>
+
+          {/* Countdown Timer Cards */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: screenWidth > 1200 ? "100px" : screenWidth > 992 ? "80px" : screenWidth > 776 ? "80px" : screenWidth > 600 ? "60px" : "40px",
+              marginTop: "40px",
+              flexWrap: "nowrap",
+              width: "100%",
+              overflowX: "auto",
+              padding :"10px"
+            }}
+          >
+            {/* Days */}
+            <CountdownCard
+              number="01"
+              label="Days"
+              screenWidth={screenWidth}
+              gradientAngle={159.021}
+            />
+
+            {/* Minute */}
+            <CountdownCard
+              number="57"
+              label="Minute"
+              screenWidth={screenWidth}
+              gradientAngle={162.418}
+            />
+
+            {/* Second */}
+            <CountdownCard
+              number="43"
+              label="Second"
+              screenWidth={screenWidth}
+              gradientAngle={165.157}
+            />
+          </Box>
+        </Box>
       </Box>
     </>
   );
