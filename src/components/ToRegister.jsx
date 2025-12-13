@@ -66,15 +66,17 @@ const ToRegister = () => {
           variant="h2"
           sx={{
             fontFamily: '"Poppins-Regular", sans-serif',
-            fontSize: screenWidth > 776 ? "52px" : "38px",
+            fontSize: screenWidth > 776 ? "52px" : "30px",
             fontWeight: 400,
             marginBottom: "30px",
-            marginTop: screenWidth > 776 ? "100px" : "30px",
+            marginTop: screenWidth > 776 ? "100px" : "0px",
             lineHeight: screenWidth > 776 ? "60px" : "55px",
             background: "#FFFFFF",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
+            padding: screenWidth > 776 ? "0 0px" : "0 0px",
+            maxWidth: "100%",
           }}
         >
           {screenWidth > 776 ? (
@@ -92,7 +94,7 @@ const ToRegister = () => {
             fontFamily: "Poppins",
             fontSize: screenWidth > 776 ? "18px" : "15px",
             fontWeight: 400,
-            marginBottom: "60px",
+            marginBottom: "30px",
             marginTop: screenWidth > 776 ? "25px" : "30px",
             opacity: 0.9,
             color: "#555555",
