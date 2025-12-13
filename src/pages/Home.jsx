@@ -298,6 +298,7 @@ const Home = () => {
           alignItems: "center",
           marginTop: "50px",
           marginBottom: "50px",
+
         }}
       >
         <img
@@ -307,6 +308,7 @@ const Home = () => {
             maxWidth: getMaxWidth(),
             width: "auto",
             height: "auto",
+            marginLeft: '20px'
           }}
         />
       </Box>
