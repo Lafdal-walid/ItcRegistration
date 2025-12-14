@@ -125,7 +125,9 @@ const ToRegister = () => {
               animation: "mobileFloat 8s ease-in-out infinite",
               "@keyframes mobileFloat": {
                 "0%, 100%": { transform: "translateY(0px) scale(1)" },
-                "50%": { transform: "translateY(-15px) scale(1.02)" },
+                "25%": { transform: "translateY(-3px) scale(1.005)" },
+                "50%": { transform: "translateY(-5px) scale(1.01)" },
+                "75%": { transform: "translateY(-3px) scale(1.005)" },
               },
             },
           }}

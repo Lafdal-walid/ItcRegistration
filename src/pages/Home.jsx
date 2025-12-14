@@ -877,26 +877,23 @@ const Home = () => {
           >
             {/* Days */}
             <CountdownCard
-              number="01"
               label="Days"
               screenWidth={screenWidth}
               gradientAngle={159.021}
               animationDelay="0s"
             />
 
-            {/* Minute */}
+            {/* Hours */}
             <CountdownCard
-              number="57"
-              label="Minute"
+              label="Hours"
               screenWidth={screenWidth}
               gradientAngle={162.418}
               animationDelay="0.2s"
             />
 
-            {/* Second */}
+            {/* Minutes */}
             <CountdownCard
-              number="43"
-              label="Second"
+              label="Minute"
               screenWidth={screenWidth}
               gradientAngle={165.157}
               animationDelay="0.4s"

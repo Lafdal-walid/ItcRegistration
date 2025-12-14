@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 
-const CountdownCard = ({ number, label, screenWidth, gradientAngle, animationDelay = "0s" }) => {
+const CountdownCard = ({ label, screenWidth, gradientAngle, animationDelay = "0s" }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const cardRef = useRef(null);
 
   useEffect(() => {
@@ -28,6 +29,45 @@ const CountdownCard = ({ number, label, screenWidth, gradientAngle, animationDel
     };
   }, []);
 
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const targetDate = new Date('December 21, 2025 00:00:00').getTime();
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        setTimeLeft({ days, hours, minutes, seconds });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const getNumber = () => {
+    switch (label.toLowerCase()) {
+      case 'days':
+        return timeLeft.days.toString().padStart(2, '0');
+      case 'hours':
+        return timeLeft.hours.toString().padStart(2, '0');
+      case 'minute':
+        return timeLeft.minutes.toString().padStart(2, '0');
+      case 'second':
+        return timeLeft.seconds.toString().padStart(2, '0');
+      default:
+        return '00';
+    }
+  };
+
   return (
     <Box
       ref={cardRef}
@@ -46,9 +86,9 @@ const CountdownCard = ({ number, label, screenWidth, gradientAngle, animationDel
       <Box
         sx={{
           position: "relative",
-          width: screenWidth > 1200 ? "200px" : screenWidth > 992 ? "160px" : screenWidth > 776 ? "140px" : screenWidth > 600 ? "120px" : "90px",
-          height: screenWidth > 1200 ? "200px" : screenWidth > 992 ? "160px" : screenWidth > 776 ? "140px" : screenWidth > 600 ? "120px" : "90px",
-          borderRadius: "29px",
+          width: screenWidth > 1200 ? "200px" : screenWidth > 992 ? "160px" : screenWidth > 776 ? "140px" : screenWidth > 600 ? "120px" : "80px",
+          height: screenWidth > 1200 ? "200px" : screenWidth > 992 ? "160px" : screenWidth > 776 ? "140px" : screenWidth > 600 ? "120px" : "80px",
+          borderRadius: screenWidth > 1200 ? "29px" : screenWidth > 992 ? "25px" : screenWidth > 776 ? "22px" : screenWidth > 600 ? "20px" : "18px",
           border: "0.435px solid rgba(255,255,255,0.08)",
           background:
             "linear-gradient(159.021deg, rgba(64, 65, 79, 0.17) 4.1653%, rgba(27, 27, 31, 0.17) 94.143%)",
@@ -71,7 +111,7 @@ const CountdownCard = ({ number, label, screenWidth, gradientAngle, animationDel
             transform: "translate(-50%, -50%)",
           }}
         >
-          {number}
+          {getNumber()}
         </Typography>
       </Box>
 
