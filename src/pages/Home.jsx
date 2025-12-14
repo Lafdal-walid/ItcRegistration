@@ -346,7 +346,7 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: screenWidth > 776 ? "-200px" : "60px",
+          marginTop: screenWidth > 776 ? "-200px" : "-20px",
           marginBottom: "10px",
           opacity: visibleSections.has("partnership") ? 1 : 0,
           transform: visibleSections.has("partnership")
@@ -369,7 +369,7 @@ const Home = () => {
         variant="body1"
         sx={{
           fontFamily: "Poppins",
-          fontSize: screenWidth > 776 ? "34px" : "22px",
+          fontSize: screenWidth > 776 ? "34px" : "24px",
           fontWeight: 500,
           marginBottom: "20px",
           opacity: visibleSections.has("partnership") ? 0.95 : 0,
@@ -422,7 +422,7 @@ const Home = () => {
         variant="body1"
         sx={{
           fontFamily: "Poppins",
-          fontSize: screenWidth > 776 ? "16px" : "14px",
+          fontSize: screenWidth > 776 ? "16px" : "16px",
           fontWeight: 400,
           marginBottom: "20px",
           opacity: visibleSections.has("partnership") ? 0.9 : 0,
@@ -472,12 +472,12 @@ const Home = () => {
         variant="body1"
         sx={{
           fontFamily: "Poppins",
-          fontSize: "40px",
+          fontSize: screenWidth > 776 ? "40px" : "28px",
           fontWeight: 500,
           marginBottom: "20px",
           opacity: visibleSections.has("sponsors") ? 0.95 : 0,
           color: "#BAB9B9",
-          marginTop: "120px",
+          marginTop: screenWidth > 776 ? "120px" : "100px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -537,7 +537,7 @@ const Home = () => {
         variant="body1"
         sx={{
           fontFamily: "Poppins",
-          fontSize: "45px",
+          fontSize: screenWidth > 776 ? "45px" : "30px",
           fontWeight: 600,
           marginBottom: "20px",
           opacity: visibleSections.has("agenda") ? 0.95 : 0,
@@ -564,7 +564,7 @@ const Home = () => {
       <Box
         sx={{
           fontFamily: "Poppins",
-          fontSize: screenWidth > 650 ? "16px" : "10px",
+          fontSize: screenWidth > 650 ? "16px" : "11px",
           fontWeight: 400,
           mt: "20px",
           opacity: visibleSections.has("agenda") ? 0.9 : 0,
@@ -621,8 +621,8 @@ const Home = () => {
           alt="Agenda"
           style={{
             maxWidth: getMaxWidth(),
-            width: "100%",
-            height: "100%",
+            width: screenWidth > 992 ? "120%" : "210%",
+            height: "100%"
           }}
         />
       </Box>
@@ -693,8 +693,8 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: screenWidth > 776 ? "0px" : "20px",
-          marginBottom: "20px",
+          marginTop: screenWidth > 776 ? "0px" : "10px",
+          marginBottom: screenWidth > 776 ? "20px" : "120px",
           opacity: visibleSections.has("location") ? 1 : 0,
           transform: visibleSections.has("location")
             ? "translateX(0)"
@@ -706,7 +706,7 @@ const Home = () => {
           src={Map}
           alt="Map"
           style={{
-            maxWidth: "75%",
+            maxWidth: screenWidth > 776 ? "80%" : "95%",
             height: "80%",
           }}
         />
@@ -737,11 +737,11 @@ const Home = () => {
           alt="background"
           sx={{
             position: "absolute",
-            top: screenWidth > 776 ? "47%" : "35%",
+            top: screenWidth > 776 ? "47%" : "22%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: screenWidth > 776 ? "80%" : "90%",
-            height: screenWidth > 776 ? "auto" : "auto",
+            width: screenWidth > 776 ? "80%" : "95%",
+            height: screenWidth > 776 ? "auto" : "200px",
             zIndex: 0,
             animation: "float 6s ease-in-out infinite",
             "@keyframes float": {
@@ -808,7 +808,7 @@ const Home = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: screenWidth > 776 ? "200px" : "20px",
+              marginTop: screenWidth > 776 ? "200px" : "60px",
               marginBottom: screenWidth > 776 ? "20px" : "0px",
             }}
           >
@@ -868,7 +868,7 @@ const Home = () => {
                   : screenWidth > 600
                   ? "60px"
                   : "40px",
-              marginTop: "40px",
+              marginTop: screenWidth > 600 ? "40px" : "20px",
               flexWrap: "nowrap",
               width: "100%",
               overflowX: "auto",
@@ -908,13 +908,13 @@ const Home = () => {
               fontFamily: "Poppins",
               fontSize: screenWidth > 776 ? "40px" : "20px",
               fontWeight: 600,
-              marginBottom: "20px",
+              marginBottom: screenWidth > 776 ? "20px" : "0px",
               opacity: 0.95,
               color: "#BAB9B9",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: screenWidth > 776 ? "60px" : "20px",
+              marginTop: screenWidth > 776 ? "60px" : "60px",
               textShadow: `
                 0px 1px 2px rgba(0,0,0,0.3),
                 0px 0px 20px rgba(186,185,185,0.1)
@@ -1015,7 +1015,7 @@ const Home = () => {
           </Box>
         </Box>
       </Box>
-      <Footer />
+      <Footer sx={{marginTop:"-100px"}} />
     </Box>
   );
 };

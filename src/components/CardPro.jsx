@@ -8,6 +8,9 @@ const CardPro = ({
   background,
   width = "450px",
   animationDelay = "0s",
+  glowIntensity = 1.0,
+  backgroundOpacity = 1.0,
+  screenWidth,
 }) => {
   const safeWidth = typeof width === "string" ? width : `${width}px`;
 
@@ -25,7 +28,7 @@ const CardPro = ({
 
         // 🔥 عند الشاشات الصغيرة: يصبح 80% تلقائيًا
         "@media (max-width: 992px)": {
-          width: "80%",
+          width: "85%",
           margin: "0 auto", // لتوسيط الكارد
         },
       }}
@@ -42,7 +45,10 @@ const CardPro = ({
           backgroundSize: "contain",
           backgroundPosition: "right center",
           backgroundRepeat: "no-repeat",
-          filter: "drop-shadow(0px 0px 40px rgba(230, 23, 7, 0.6)) drop-shadow(0px 0px 60px rgba(230, 23, 7, 0.4))",
+          filter: `drop-shadow(0px 0px ${40 * glowIntensity}px rgba(230, 23, 7, ${0.6 * glowIntensity})) drop-shadow(0px 0px ${60 * glowIntensity}px rgba(230, 23, 7, ${0.4 * glowIntensity}))`,
+          opacity: typeof backgroundOpacity === 'object' 
+            ? (screenWidth > 776 ? backgroundOpacity.large : backgroundOpacity.small)
+            : backgroundOpacity,
           zIndex: 3,
         }}
       />
@@ -76,7 +82,7 @@ const CardPro = ({
           border: "0.433px solid rgba(255,255,255,0.18)",
           boxShadow: "0px 1.731px 1.731px 0px rgba(0,0,0,0.25)",
           backdropFilter: "blur(0.5px)",
-          background: "#070809",
+          background: "rgba(15, 17, 19, 0.9)",
           zIndex: 2,
           display: "flex",
           alignItems: "center",
@@ -125,7 +131,7 @@ const CardPro = ({
           left: "44px",
           fontFamily: '"Poppins-Regular", sans-serif',
           fontWeight: 600,
-          fontSize: "18px",
+          fontSize: "20px",
           color: "#FFFFFF",
           whiteSpace: "nowrap",
           zIndex: 2,
@@ -138,7 +144,7 @@ const CardPro = ({
             left: "50%",
             transform: "translateX(-50%)",
             textAlign: "center",
-            fontSize: "14px", 
+            fontSize: "15px", 
           },
         }}
       >
@@ -153,7 +159,7 @@ const CardPro = ({
           left: "44px",
           fontFamily: '"Poppins-Regular", sans-serif',
           fontWeight: 400,
-          fontSize: "12px",
+          fontSize: "14px",
           color: "#BAB9B9",
           whiteSpace: "nowrap",
           zIndex: 2,
@@ -167,7 +173,7 @@ const CardPro = ({
             left: "50%",
             transform: "translateX(-50%)",
             textAlign: "center",
-            fontSize: "11px", 
+            fontSize: "12px", 
           },
         }}
       >

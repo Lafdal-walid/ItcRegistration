@@ -89,7 +89,7 @@ const EventDescription = ({ pb = {} }) => {
           color: "#fff",
           maxWidth: "800px",
           margin: "0 auto",
-          marginTop: screenWidth > 776 ? "0" : "60px",
+          marginTop: screenWidth > 776 ? "0" : "-10px",
         }}
       >
         <Box
@@ -103,17 +103,18 @@ const EventDescription = ({ pb = {} }) => {
           variant="h2"
           sx={{
             fontFamily: '"Poppins-Regular", sans-serif',
-            fontSize: screenWidth > 776 ? "34px" : "33px",
+            fontSize: screenWidth > 776 ? "34px" : "24px",
+            padding: screenWidth > 776 ? "0" : "0 10px",
             fontWeight: 600,
             marginBottom: "0px",
-            marginTop: screenWidth > 776 ? "-15px" : "0px",
-            lineHeight: screenWidth > 776 ? "60px" : "55px",
+            marginTop: screenWidth > 776 ? "-15px" : "-10px",
+            lineHeight: screenWidth > 776 ? "60px" : "30px",
             background:
               "linear-gradient(90deg, #aaaaaaff 0%, #dfdfdf 60%, #f2f2f2 70%, #ffffff 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            padding: screenWidth > 776 ? "0 0px" : "0 0px",
+            padding: screenWidth > 776 ? "0 0px" : "0 30px",
             maxWidth: "100%",
           }}
         >
@@ -124,9 +125,9 @@ const EventDescription = ({ pb = {} }) => {
           variant="body1"
           sx={{
             fontFamily: "Poppins",
-            fontSize: screenWidth > 776 ? "17px" : "15px",
+            fontSize: screenWidth > 776 ? "17px" : "12px",
+            padding: screenWidth > 776 ? "0" : "0 50px",
             fontWeight: 400,
-            marginBottom: "0px",
             marginTop: screenWidth > 776 ? "25px" : "30px",
             opacity: 0.9,
             background:
@@ -180,6 +181,8 @@ const EventDescription = ({ pb = {} }) => {
             icon={<Box component="img" src={ic2} sx={{ width: "100%" }} />}
             background={ve2}
             width="600px"
+            backgroundOpacity={{ small: 0.4, large: 1 }}
+            screenWidth={screenWidth}
           />
         </Box>
 

@@ -89,11 +89,11 @@ const ToRegister = () => {
         alt="overlay"
         sx={{
           position: "absolute",
-          top: screenWidth > 776 ? "52.5%" : "35%",
-          left: "49%",
+          top: screenWidth > 776 ? "52.5%" : "36%",
+          left: screenWidth > 776 ? "49%" : "50%",
           transform: "translate(-50%, -50%)",
-          maxWidth: screenWidth > 776 ? "60%" : "70%",
-          maxHeight: screenWidth > 776 ? "60%" : "70%",
+          maxWidth: screenWidth > 776 ? "60%" : "80%",
+          maxHeight: screenWidth > 776 ? "60%" : "80%",
           zIndex: 0,
           animation: "float 8s ease-in-out infinite, pulse 6s ease-in-out infinite, glow 10s ease-in-out infinite",
           "@keyframes float": {
@@ -142,16 +142,19 @@ const ToRegister = () => {
           variant="h2"
           sx={{
             fontFamily: '"Poppins-Regular", sans-serif',
-            fontSize: screenWidth > 776 ? "50px" : "16px",
+            fontSize: screenWidth > 776 ? "50px" : "24px",
             fontWeight: 600,
             marginBottom: "30px",
-            marginTop: screenWidth > 776 ? "40px" : "-120px",
+            marginTop: screenWidth > 776 ? "40px" : "-30px",
             lineHeight: screenWidth > 776 ? "60px" : "30px",
             background: "linear-gradient(90deg, #aaaaaaff 0%, #dfdfdf 60%, #f2f2f2 70%, #ffffff 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            maxWidth: "100%",
+            maxWidth: screenWidth > 776 ? "100%" : "100vw",
+            width: screenWidth > 776 ? "auto" : "100vw",
+            padding: screenWidth > 776 ? "0" : "0 20px",
+            boxSizing: "border-box",
           }}
         >
           
@@ -163,10 +166,11 @@ const ToRegister = () => {
           variant="body1"
           sx={{
             fontFamily: "Poppins",
-            fontSize: screenWidth > 776 ? "18px" : "14px",
+            fontSize: screenWidth > 776 ? "18px" : "12px",
+            padding: screenWidth > 776 ? "0" : "0 25px",
             fontWeight: 400,
-            marginBottom: "42px",
-            marginTop: screenWidth > 776 ? "25px" : "30px",
+            marginBottom: screenWidth > 776 ? "42px" : "80px",
+            marginTop: screenWidth > 776 ? "25px" : "35px",
             opacity: 0.9,
             background: "linear-gradient(90deg, #9b9b9b 0%, #bdbdbd 35%, #e0e0e0 70%, #ffffff 100%)",
             WebkitBackgroundClip: "text",
