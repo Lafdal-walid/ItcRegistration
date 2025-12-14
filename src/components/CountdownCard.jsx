@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 
-const CountdownCard = ({ number, label, screenWidth, gradientAngle }) => {
+const CountdownCard = ({ number, label, screenWidth, gradientAngle, animationDelay = "0s" }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef(null);
 
@@ -39,6 +39,7 @@ const CountdownCard = ({ number, label, screenWidth, gradientAngle }) => {
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.8)",
         transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+        transitionDelay: animationDelay,
       }}
     >
       {/* CARD */}

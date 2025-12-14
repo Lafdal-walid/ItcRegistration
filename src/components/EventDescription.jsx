@@ -16,6 +16,7 @@ const EventDescription = ({ pb = {} }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+
   const paddingBottom = typeof pb === "string" ? pb : pb.pb || "900px";
 
   useEffect(() => {
@@ -35,15 +36,10 @@ const EventDescription = ({ pb = {} }) => {
       { threshold: 0.1 }
     );
 
-    const currentRef = sectionRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
+    if (sectionRef.current) observer.observe(sectionRef.current);
 
     return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
     };
   }, []);
 
@@ -54,69 +50,71 @@ const EventDescription = ({ pb = {} }) => {
         position: "relative",
         width: "100vw",
         minHeight: "100vh",
-        backgroundColor: "#000000",
-        margin: 0,
-        padding: "80px 20px",
-        boxSizing: "border-box",
+        backgroundColor: "#000",
+        padding: "80px 0px 0px 0px",
         paddingBottom: paddingBottom,
+        boxSizing: "border-box",
+        overflow: "visible",
+
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(50px)",
         transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+
         "@media (max-width: 992px)": {
-          paddingBottom: "1250px",
+          paddingBottom: "120px",
         },
       }}
     >
-      {/* Background Image */}
+      {/* Background */}
       <Box
         component="img"
         src={bk2}
-        alt="background overlay"
+        alt="background"
         sx={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
+          inset: 0,
+          width: "100%",
+          height: "100%",
           objectFit: "cover",
           zIndex: 1,
         }}
       />
 
-      {/* Main Text Section */}
+      {/* Text Section */}
       <Box
         sx={{
-          position: "absolute",
-          top: "190px",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          textAlign: "center",
+          position: "relative",
           zIndex: 2,
-          color: "#FFFFFF",
+          textAlign: "center",
+          color: "#fff",
+          maxWidth: "800px",
+          margin: "0 auto",
+          marginTop: screenWidth > 776 ? "0" : "60px",
         }}
       >
         <Box
           component="img"
           src={Logo2}
-          alt="Logo2"
-          sx={{
-            width: "90px",
-            height: "90px",
-            marginBottom: screenWidth > 776 ? "15px" : "0px",
-          }}
+          alt="Logo"
+          sx={{ width: 90, height: 90, mb: 2 }}
         />
 
         <Typography
           variant="h2"
           sx={{
             fontFamily: '"Poppins-Regular", sans-serif',
-            fontSize: screenWidth > 776 ? "28px" : "22px",
-            fontWeight: 400,
-            marginBottom: "30px",
-            lineHeight: "30px",
-            background: "#BAB9B9",
+            fontSize: screenWidth > 776 ? "34px" : "33px",
+            fontWeight: 600,
+            marginBottom: "0px",
+            marginTop: screenWidth > 776 ? "-15px" : "0px",
+            lineHeight: screenWidth > 776 ? "60px" : "55px",
+            background:
+              "linear-gradient(90deg, #aaaaaaff 0%, #dfdfdf 60%, #f2f2f2 70%, #ffffff 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            padding: screenWidth > 776 ? "0 0px" : "0 0px",
+            maxWidth: "100%",
           }}
         >
           CODE REAL SOLUTIONS. SHAPE THE FUTURE.
@@ -126,30 +124,35 @@ const EventDescription = ({ pb = {} }) => {
           variant="body1"
           sx={{
             fontFamily: "Poppins",
-            fontSize: screenWidth > 776 ? "14px" : "12px",
+            fontSize: screenWidth > 776 ? "17px" : "15px",
             fontWeight: 400,
+            marginBottom: "0px",
+            marginTop: screenWidth > 776 ? "25px" : "30px",
             opacity: 0.9,
-            color: "#BAB9B9",
-            marginTop: "30px",
+            background:
+              "linear-gradient(90deg, #9b9b9b 0%, #bdbdbd 35%, #e0e0e0 70%, #ffffff 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
           }}
         >
-          Compete and level up. Solve complex, real-life problems using an
-          programming <br></br> language you choose. Your next breakthrough
-          starts here.
+          Compete and level up. Solve complex, real-life problems using any
+          programming <br></br> language you choose. Your next breakthrough starts here
         </Typography>
       </Box>
 
-      {/* 4 Cards Section */}
+      {/* Cards Section */}
       <Box
         sx={{
-          position: "absolute",
-          top: "400px",
-          left: "20px",
-          right: "20px",
+          position: screenWidth > 992 ? "absolute" : "relative",
+          top: screenWidth > 992 ? "450px" : "auto",
+          left: 0,
+          right: 0,
+          marginTop: screenWidth > 992 ? "-30px" : "60px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: screenWidth > 992 ? "10px" : "30px",
+          gap: "30px",
           zIndex: 2,
         }}
       >
@@ -157,23 +160,16 @@ const EventDescription = ({ pb = {} }) => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
-            gap: screenWidth > 992 ? "10px" : "30px",
-            alignItems: "flex-start",
             flexDirection: screenWidth > 992 ? "row" : "column",
-            width: screenWidth > 992 ? "auto" : "100%",
+            gap: "30px",
+            justifyContent: "center",
+            width: "100%",
           }}
         >
           <CardPro
             title="Any programming language"
             description="Python, C++, JavaScript—use what makes you fast."
-            icon={
-              <Box
-                component="img"
-                src={ic1}
-                sx={{ width: "100%", height: "100%" }}
-              />
-            }
+            icon={<Box component="img" src={ic1} sx={{ width: "100%" }} />}
             background={ve1}
             width="400px"
           />
@@ -181,13 +177,7 @@ const EventDescription = ({ pb = {} }) => {
           <CardPro
             title="Real problems"
             description="Solve complex, real-life challenges that matter."
-            icon={
-              <Box
-                component="img"
-                src={ic2}
-                sx={{ width: "100%", height: "100%" }}
-              />
-            }
+            icon={<Box component="img" src={ic2} sx={{ width: "100%" }} />}
             background={ve2}
             width="600px"
           />
@@ -197,24 +187,16 @@ const EventDescription = ({ pb = {} }) => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
-            gap: screenWidth > 992 ? "10px" : "30px",
-            alignItems: "flex-start",
-            marginTop: screenWidth > 992 ? "20px" : "0px",
             flexDirection: screenWidth > 992 ? "row" : "column",
-            width: screenWidth > 992 ? "auto" : "100%",
+            gap: "30px",
+            justifyContent: "center",
+            width: "100%",
           }}
         >
           <CardPro
             title="Compete & win"
             description="Battle against the best coders worldwide."
-            icon={
-              <Box
-                component="img"
-                src={ic3}
-                sx={{ width: "100%", height: "100%" }}
-              />
-            }
+            icon={<Box component="img" src={ic3} sx={{ width: "100%" }} />}
             background={ve3}
             width="600px"
           />
@@ -222,13 +204,7 @@ const EventDescription = ({ pb = {} }) => {
           <CardPro
             title="Level up"
             description="Push your skills to the next level."
-            icon={
-              <Box
-                component="img"
-                src={ic4}
-                sx={{ width: "100%", height: "100%" }}
-              />
-            }
+            icon={<Box component="img" src={ic4} sx={{ width: "100%" }} />}
             background={ve4}
             width="400px"
           />

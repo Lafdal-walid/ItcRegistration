@@ -7,6 +7,7 @@ const CardPro = ({
   icon,
   background,
   width = "450px",
+  animationDelay = "0s",
 }) => {
   const safeWidth = typeof width === "string" ? width : `${width}px`;
 
@@ -37,11 +38,12 @@ const CardPro = ({
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundImage: background ? `url(${background})` : "none",
+          backgroundImage: `url(${background})`,
           backgroundSize: "contain",
           backgroundPosition: "right center",
           backgroundRepeat: "no-repeat",
-          zIndex: 0,
+          filter: "drop-shadow(0px 0px 40px rgba(230, 23, 7, 0.6)) drop-shadow(0px 0px 60px rgba(230, 23, 7, 0.4))",
+          zIndex: 3,
         }}
       />
 
@@ -56,9 +58,8 @@ const CardPro = ({
           borderRadius: "3.461px",
           border: "0.433px solid rgba(255,255,255,0.08)",
           boxShadow: "0px 1.731px 1.731px 0px rgba(0,0,0,0.25)",
-          backdropFilter: "blur(4.579px)",
-          background:
-            "linear-gradient(164.73deg, rgba(64, 65, 79, 0.17) 4.1653%, rgba(27, 27, 31, 0.17) 94.143%)",
+          backdropFilter: "blur(0.5px)",
+          background: "#070809",
           zIndex: 1,
         }}
       />
@@ -74,9 +75,8 @@ const CardPro = ({
           borderRadius: "8px",
           border: "0.433px solid rgba(255,255,255,0.18)",
           boxShadow: "0px 1.731px 1.731px 0px rgba(0,0,0,0.25)",
-          backdropFilter: "blur(4.579px)",
-          background:
-            "linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.02) 100%), linear-gradient(158.136deg, rgba(64, 65, 79, 0.17) 4.1653%, rgba(27, 27, 31, 0.17) 94.143%)",
+          backdropFilter: "blur(0.5px)",
+          background: "#070809",
           zIndex: 2,
           display: "flex",
           alignItems: "center",
@@ -104,8 +104,8 @@ const CardPro = ({
         <Box
           sx={{
             position: "relative",
-            width: "29px",
-            height: "29px",
+            width: "20px",
+            height: "20px",
             zIndex: 2,
             display: "flex",
             alignItems: "center",
@@ -124,11 +124,15 @@ const CardPro = ({
           top: "110px",
           left: "44px",
           fontFamily: '"Poppins-Regular", sans-serif',
-          fontWeight: 500,
+          fontWeight: 600,
           fontSize: "18px",
           color: "#FFFFFF",
           whiteSpace: "nowrap",
           zIndex: 2,
+          background: "linear-gradient(90deg, #aaaaaaff 0%, #dfdfdf 60%, #f2f2f2 70%, #ffffff 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
 
           "@media (max-width: 776px)": {
             left: "50%",
@@ -153,6 +157,11 @@ const CardPro = ({
           color: "#BAB9B9",
           whiteSpace: "nowrap",
           zIndex: 2,
+          opacity: 0.9,
+          background: "linear-gradient(90deg, #9b9b9b 0%, #bdbdbd 35%, #e0e0e0 70%, #ffffff 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
 
           "@media (max-width: 776px)": {
             left: "50%",

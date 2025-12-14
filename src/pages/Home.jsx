@@ -71,7 +71,7 @@ const Home = () => {
     ];
 
     const currentRefs = refs.map(({ ref }) => ref.current).filter(Boolean);
-    
+
     refs.forEach(({ ref, id }) => {
       const currentRef = ref.current;
       if (currentRef) {
@@ -117,7 +117,77 @@ const Home = () => {
   ];
 
   return (
-    <>
+    <Box
+      sx={{
+        position: "relative",
+        width: "100%",
+        minHeight: "100vh",
+        backgroundColor: "#000000",
+        overflow: "hidden",
+        "&::before": {
+          content: '""',
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: `
+            radial-gradient(circle at 20% 20%, rgba(230, 23, 7, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 50% 50%, rgba(186, 185, 185, 0.08) 0%, transparent 60%),
+            linear-gradient(45deg, rgba(230, 23, 7, 0.03) 0%, transparent 30%, rgba(255, 255, 255, 0.02) 70%, transparent 100%)
+          `,
+          animation: "globalBackgroundShift 25s ease-in-out infinite",
+          zIndex: -1,
+          "@keyframes globalBackgroundShift": {
+            "0%, 100%": { 
+              transform: "translate(0, 0) rotate(0deg) scale(1)",
+              filter: "brightness(1) hue-rotate(0deg)"
+            },
+            "25%": { 
+              transform: "translate(-30px, -20px) rotate(90deg) scale(1.1)",
+              filter: "brightness(1.1) hue-rotate(10deg)"
+            },
+            "50%": { 
+              transform: "translate(20px, -30px) rotate(180deg) scale(1.05)",
+              filter: "brightness(0.95) hue-rotate(-10deg)"
+            },
+            "75%": { 
+              transform: "translate(-20px, 30px) rotate(270deg) scale(1.08)",
+              filter: "brightness(1.05) hue-rotate(5deg)"
+            }
+          }
+        },
+        "&::after": {
+          content: '""',
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: `
+            radial-gradient(circle at 30% 70%, rgba(230, 23, 7, 0.08) 0%, transparent 40%),
+            radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 40%)
+          `,
+          animation: "secondaryBackgroundMove 30s ease-in-out infinite reverse",
+          zIndex: -1,
+          "@keyframes secondaryBackgroundMove": {
+            "0%, 100%": { 
+              transform: "translate(0, 0) scale(1)",
+              opacity: 0.5
+            },
+            "33%": { 
+              transform: "translate(40px, -40px) scale(1.2)",
+              opacity: 0.7
+            },
+            "66%": { 
+              transform: "translate(-40px, 40px) scale(0.9)",
+              opacity: 0.3
+            }
+          }
+        }
+      }}
+    >
       {!isMobile && <NavHead />}
       {isMobile && (
         <Box
@@ -136,13 +206,20 @@ const Home = () => {
               border: "1px solid rgba(186, 185, 185, 0.3)",
               backdropFilter: "blur(10px)",
               boxShadow: "0px 2px 8px rgba(186, 185, 185, 0.15)",
+              animation: "pulse 2s ease-in-out infinite",
               "&:hover": {
                 backgroundColor: "rgba(186, 185, 185, 0.2)",
                 color: "#FFFFFF",
                 transform: "scale(1.05)",
                 boxShadow: "0px 3px 12px rgba(186, 185, 185, 0.25)",
+                animation: "none",
               },
               transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              "@keyframes pulse": {
+                "0%": { transform: "scale(1)" },
+                "50%": { transform: "scale(1.1)" },
+                "100%": { transform: "scale(1)" },
+              },
             }}
           >
             <MenuIcon />
@@ -156,7 +233,8 @@ const Home = () => {
         onClose={toggleDrawer(false)}
         sx={{
           "& .MuiDrawer-paper": {
-            background: "linear-gradient(135deg, rgba(10, 8, 8, 0.95) 0%, rgba(20, 15, 15, 0.98) 100%)",
+            background:
+              "linear-gradient(135deg, rgba(10, 8, 8, 0.95) 0%, rgba(20, 15, 15, 0.98) 100%)",
             backdropFilter: "blur(20px)",
             border: "1px solid rgba(186, 185, 185, 0.2)",
             borderRight: "2px solid rgba(186, 185, 185, 0.4)",
@@ -171,7 +249,8 @@ const Home = () => {
               left: "-100%",
               width: "100%",
               height: "100%",
-              background: "linear-gradient(90deg, transparent, rgba(186, 185, 185, 0.1), transparent)",
+              background:
+                "linear-gradient(90deg, transparent, rgba(230, 23, 7, 0.15), transparent)",
               animation: "shimmer 3s infinite",
             },
             "@keyframes shimmer": {
@@ -182,10 +261,11 @@ const Home = () => {
         }}
       >
         <Box
-          sx={{ 
-            width: 280, 
+          sx={{
+            width: 280,
             padding: 3,
-            background: "linear-gradient(180deg, rgba(186, 185, 185, 0.05) 0%, transparent 100%)",
+            background:
+              "linear-gradient(180deg, rgba(186, 185, 185, 0.05) 0%, transparent 100%)",
             position: "relative",
             zIndex: 1,
           }}
@@ -222,27 +302,34 @@ const Home = () => {
                   borderRadius: "12px",
                   marginBottom: 1,
                   padding: "12px 20px",
-                  background: "linear-gradient(135deg, rgba(186, 185, 185, 0.05) 0%, transparent 100%)",
+                  background:
+                    "linear-gradient(135deg, rgba(186, 185, 185, 0.05) 0%, transparent 100%)",
                   border: "1px solid rgba(186, 185, 185, 0.1)",
+                  borderLeft: "2px solid rgba(230, 23, 7, 0.3)",
+                  borderRight: "2px solid rgba(230, 23, 7, 0.3)",
                   position: "relative",
                   zIndex: 2,
                   "&:hover": {
                     color: "#FFFFFF",
-                    background: "linear-gradient(135deg, rgba(186, 185, 185, 0.2) 0%, rgba(186, 185, 185, 0.1) 100%)",
+                    background:
+                      "linear-gradient(135deg, rgba(186, 185, 185, 0.2) 0%, rgba(230, 23, 7, 0.05) 100%)",
                     border: "1px solid rgba(186, 185, 185, 0.3)",
+                    borderLeft: "3px solid rgba(230, 23, 7, 0.6)",
+                    borderRight: "3px solid rgba(230, 23, 7, 0.6)",
                     transform: "translateX(8px)",
                     boxShadow: "0px 2px 10px rgba(186, 185, 185, 0.15)",
                   },
+
                   animation: `slideIn 0.3s ease-out ${index * 0.1}s both`,
                 }}
               >
-                <ListItemText 
+                <ListItemText
                   primary={item}
                   sx={{
                     "& .MuiListItemText-primary": {
                       fontFamily: '"Poppins", sans-serif',
                       fontWeight: 500,
-                    }
+                    },
                   }}
                 />
               </ListItem>
@@ -259,10 +346,12 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: screenWidth > 776 ? "00px" : "60px",
-          marginBottom: "20px",
+          marginTop: screenWidth > 776 ? "-200px" : "60px",
+          marginBottom: "10px",
           opacity: visibleSections.has("partnership") ? 1 : 0,
-          transform: visibleSections.has("partnership") ? "translateY(0)" : "translateY(30px)",
+          transform: visibleSections.has("partnership")
+            ? "translateY(0)"
+            : "translateY(30px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
@@ -280,23 +369,25 @@ const Home = () => {
         variant="body1"
         sx={{
           fontFamily: "Poppins",
-          fontSize: screenWidth > 776 ? "30px" : "22px",
+          fontSize: screenWidth > 776 ? "34px" : "22px",
           fontWeight: 500,
           marginBottom: "20px",
           opacity: visibleSections.has("partnership") ? 0.95 : 0,
           color: "#BAB9B9",
-          marginTop: "20px",
+          marginTop: "15px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           padding: "10px",
-          background: "linear-gradient(135deg, #BAB9B9 0%, #E8E8E8 50%, #D0D0D0 100%)",
+          background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
           filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.15))",
           letterSpacing: "0.3px",
-          transform: visibleSections.has("partnership") ? "translateY(0)" : "translateY(20px)",
+          transform: visibleSections.has("partnership")
+            ? "translateY(0)"
+            : "translateY(20px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
         }}
       >
@@ -308,10 +399,12 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: "20px",
+          marginTop: "-15px",
           marginBottom: "20px",
           opacity: visibleSections.has("partnership") ? 1 : 0,
-          transform: visibleSections.has("partnership") ? "scale(1)" : "scale(0.8)",
+          transform: visibleSections.has("partnership")
+            ? "scale(1)"
+            : "scale(0.8)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s",
         }}
       >
@@ -338,14 +431,17 @@ const Home = () => {
           textAlign: "center",
           paddingLeft: "50px",
           paddingRight: "50px",
-          background: "linear-gradient(135deg, #BAB9B9 0%, #E0E0E0 50%, #C8C8C8 100%)",
+          background:
+            "linear-gradient(135deg, #BAB9B9 0%, #E0E0E0 50%, #C8C8C8 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
           filter: "drop-shadow(0px 1px 2px rgba(0,0,0,0.1))",
           letterSpacing: "0.2px",
           lineHeight: 1.5,
-          transform: visibleSections.has("partnership") ? "translateY(0)" : "translateY(20px)",
+          transform: visibleSections.has("partnership")
+            ? "translateY(0)"
+            : "translateY(20px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s",
         }}
       >
@@ -381,17 +477,19 @@ const Home = () => {
           marginBottom: "20px",
           opacity: visibleSections.has("sponsors") ? 0.95 : 0,
           color: "#BAB9B9",
-          marginTop: "70px",
+          marginTop: "120px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          background: "linear-gradient(135deg, #BAB9B9 0%, #E8E8E8 50%, #D0D0D0 100%)",
+          background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
           filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.15))",
           letterSpacing: "0.4px",
-          transform: visibleSections.has("sponsors") ? "translateY(0)" : "translateY(30px)",
+          transform: visibleSections.has("sponsors")
+            ? "translateY(0)"
+            : "translateY(30px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
@@ -413,15 +511,22 @@ const Home = () => {
           <Box
             key={item}
             sx={{
-              width: screenWidth > 776 ? "100px" : "60px",
-              height: screenWidth > 776 ? "100px" : "60px",
+              width: screenWidth > 776 ? "115px" : "70px",
+              height: screenWidth > 776 ? "115px" : "70px",
               borderRadius: "50%",
               backgroundColor: "#D9D9D966",
               flex: "0 0 auto",
               opacity: visibleSections.has("sponsors") ? 1 : 0,
-              transform: visibleSections.has("sponsors") ? "scale(1) rotate(0deg)" : "scale(0) rotate(180deg)",
+              transform: visibleSections.has("sponsors")
+                ? "scale(1) rotate(0deg)"
+                : `scale(0) rotate(${180 + index * 30}deg)`,
               transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
-              transitionDelay: visibleSections.has("sponsors") ? `${index * 0.1}s` : "0s",
+              transitionDelay: visibleSections.has("sponsors")
+                ? `${index * 0.15}s`
+                : "0s",
+              boxShadow: visibleSections.has("sponsors")
+                ? "0px 4px 20px rgba(217, 217, 217, 0.3)"
+                : "none",
             }}
           />
         ))}
@@ -437,17 +542,19 @@ const Home = () => {
           marginBottom: "20px",
           opacity: visibleSections.has("agenda") ? 0.95 : 0,
           color: "#BAB9B9",
-          marginTop: screenWidth > 776 ? "110px" : "40px",
+          marginTop: screenWidth > 776 ? "140px" : "40px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          background: "linear-gradient(135deg, #BAB9B9 0%, #E8E8E8 50%, #D0D0D0 100%)",
+          background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
           filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.15))",
           letterSpacing: "0.5px",
-          transform: visibleSections.has("agenda") ? "translateY(0)" : "translateY(30px)",
+          transform: visibleSections.has("agenda")
+            ? "translateY(0)"
+            : "translateY(30px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
@@ -459,7 +566,6 @@ const Home = () => {
           fontFamily: "Poppins",
           fontSize: screenWidth > 650 ? "16px" : "10px",
           fontWeight: 400,
-          mb: "10px",
           mt: "20px",
           opacity: visibleSections.has("agenda") ? 0.9 : 0,
           color: "#BAB9B9",
@@ -467,26 +573,32 @@ const Home = () => {
           justifyContent: "center",
           alignItems: "center",
           gap: "4px",
-          background: "linear-gradient(135deg, #BAB9B9 0%, #E0E0E0 50%, #C8C8C8 100%)",
+          background:
+            "linear-gradient(135deg, #BAB9B9 0%, #E0E0E0 50%, #C8C8C8 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
           filter: "drop-shadow(0px 1px 2px rgba(0,0,0,0.1))",
           letterSpacing: "0.2px",
-          transform: visibleSections.has("agenda") ? "translateY(0)" : "translateY(20px)",
+          transform: visibleSections.has("agenda")
+            ? "translateY(0)"
+            : "translateY(20px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
         }}
       >
         <span>The Great challenge of ITCP 4.0 will be at</span>
-        <span style={{ 
-          color: "#E61707", 
-          fontWeight: 500,
-          background: "linear-gradient(135deg, #E61707 0%, #FF4444 50%, #CC0000 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-          filter: "drop-shadow(0px 1px 2px rgba(230,23,7,0.2))"
-        }}>
+        <span
+          style={{
+            color: "#E61707",
+            fontWeight: 500,
+            background:
+              "linear-gradient(135deg, #E61707 0%, #FF4444 50%, #CC0000 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            filter: "drop-shadow(0px 1px 2px rgba(230,23,7,0.2))",
+          }}
+        >
           21-22 December
         </span>
       </Box>
@@ -496,10 +608,11 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: "30px",
           marginBottom: "30px",
           opacity: visibleSections.has("agenda") ? 1 : 0,
-          transform: visibleSections.has("agenda") ? "translateX(0)" : "translateX(-50px)",
+          transform: visibleSections.has("agenda")
+            ? "translateX(0)"
+            : "translateX(-50px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s",
         }}
       >
@@ -508,9 +621,8 @@ const Home = () => {
           alt="Agenda"
           style={{
             maxWidth: getMaxWidth(),
-            width: "auto",
-            height: "auto",
-            marginLeft: "20px",
+            width: "100%",
+            height: "100%",
           }}
         />
       </Box>
@@ -525,7 +637,7 @@ const Home = () => {
           marginBottom: "20px",
           opacity: visibleSections.has("location") ? 0.95 : 0,
           color: "#BAB9B9",
-          marginTop: screenWidth > 776 ? "-40px" : "-40px",
+          marginTop: screenWidth > 776 ? "-30px" : "-40px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -535,12 +647,14 @@ const Home = () => {
           `,
           letterSpacing: "0.4px",
           lineHeight: 1.1,
-          background: "linear-gradient(135deg, #BAB9B9 0%, #D4D3D3 50%, #BAB9B9 100%)",
+          background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
           filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.2))",
-          transform: visibleSections.has("location") ? "translateY(0)" : "translateY(30px)",
+          transform: visibleSections.has("location")
+            ? "translateY(0)"
+            : "translateY(30px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
@@ -554,8 +668,8 @@ const Home = () => {
           fontWeight: 600,
           marginBottom: "px",
           opacity: visibleSections.has("location") ? 0.9 : 0,
-          color: "#BAB9B9",
-          marginTop: screenWidth > 776 ? "0px" : "-10px",
+          color: "#bebebeff",
+          marginTop: screenWidth > 776 ? "10px" : "-10px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -565,7 +679,9 @@ const Home = () => {
           `,
           letterSpacing: "0.2px",
           lineHeight: 1.3,
-          transform: visibleSections.has("location") ? "translateY(0)" : "translateY(20px)",
+          transform: visibleSections.has("location")
+            ? "translateY(0)"
+            : "translateY(20px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
         }}
       >
@@ -580,7 +696,9 @@ const Home = () => {
           marginTop: screenWidth > 776 ? "0px" : "20px",
           marginBottom: "20px",
           opacity: visibleSections.has("location") ? 1 : 0,
-          transform: visibleSections.has("location") ? "translateX(0)" : "translateX(50px)",
+          transform: visibleSections.has("location")
+            ? "translateX(0)"
+            : "translateX(50px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s",
         }}
       >
@@ -588,8 +706,8 @@ const Home = () => {
           src={Map}
           alt="Map"
           style={{
-            maxWidth: "85%",
-            height: "100%",
+            maxWidth: "75%",
+            height: "80%",
           }}
         />
       </Box>
@@ -606,7 +724,9 @@ const Home = () => {
           padding: "80px 20px",
           boxSizing: "border-box",
           opacity: visibleSections.has("timer") ? 1 : 0,
-          transform: visibleSections.has("timer") ? "translateY(0)" : "translateY(50px)",
+          transform: visibleSections.has("timer")
+            ? "translateY(0)"
+            : "translateY(50px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
@@ -619,11 +739,15 @@ const Home = () => {
             position: "absolute",
             top: screenWidth > 776 ? "47%" : "35%",
             left: "50%",
-            transform: "translate(-50%, -60%)",
-            width: screenWidth > 776 ? "90vw" : "90vw",
-            height: screenWidth > 776 ? "40vh" : "40vh",
-            objectFit: "contain",
-            zIndex: 1,
+            transform: "translate(-50%, -50%)",
+            width: screenWidth > 776 ? "80%" : "90%",
+            height: screenWidth > 776 ? "auto" : "auto",
+            zIndex: 0,
+            animation: "float 6s ease-in-out infinite",
+            "@keyframes float": {
+              "0%, 100%": { transform: "translate(-50%, -50%) translateY(0)" },
+              "50%": { transform: "translate(-50%, -50%) translateY(-10px)" },
+            },
           }}
         />
         <Box
@@ -638,6 +762,11 @@ const Home = () => {
             height: screenWidth > 776 ? "100vh" : "100vh",
             objectFit: "cover",
             zIndex: 2,
+            animation: "slideLeft 8s ease-in-out infinite",
+            "@keyframes slideLeft": {
+              "0%, 100%": { transform: "translateX(0)" },
+              "50%": { transform: "translateX(-20px)" },
+            },
           }}
         />
         <Box
@@ -652,6 +781,11 @@ const Home = () => {
             height: screenWidth > 776 ? "100vh" : "100vh",
             objectFit: "cover",
             zIndex: 2,
+            animation: "slideRight 8s ease-in-out infinite",
+            "@keyframes slideRight": {
+              "0%, 100%": { transform: "translateX(0)" },
+              "50%": { transform: "translateX(20px)" },
+            },
           }}
         />
 
@@ -674,7 +808,7 @@ const Home = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: screenWidth > 776 ? "20px" : "20px",
+              marginTop: screenWidth > 776 ? "200px" : "20px",
               marginBottom: screenWidth > 776 ? "20px" : "0px",
             }}
           >
@@ -708,7 +842,7 @@ const Home = () => {
               `,
               letterSpacing: "0.5px",
               lineHeight: 1.1,
-              background: "linear-gradient(135deg, #BAB9B9 0%, #D4D3D3 50%, #BAB9B9 100%)",
+              background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -747,6 +881,7 @@ const Home = () => {
               label="Days"
               screenWidth={screenWidth}
               gradientAngle={159.021}
+              animationDelay="0s"
             />
 
             {/* Minute */}
@@ -755,6 +890,7 @@ const Home = () => {
               label="Minute"
               screenWidth={screenWidth}
               gradientAngle={162.418}
+              animationDelay="0.2s"
             />
 
             {/* Second */}
@@ -763,6 +899,7 @@ const Home = () => {
               label="Second"
               screenWidth={screenWidth}
               gradientAngle={165.157}
+              animationDelay="0.4s"
             />
           </Box>
           <Typography
@@ -784,7 +921,7 @@ const Home = () => {
               `,
               letterSpacing: "0.3px",
               lineHeight: 1.2,
-              background: "linear-gradient(135deg, #BAB9B9 0%, #D4D3D3 50%, #BAB9B9 100%)",
+              background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -831,7 +968,8 @@ const Home = () => {
                   left: "-100%",
                   width: "100%",
                   height: "100%",
-                  background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                  background:
+                    "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
                   transition: "left 0.5s",
                 },
                 "&:hover": {
@@ -878,7 +1016,7 @@ const Home = () => {
         </Box>
       </Box>
       <Footer />
-    </>
+    </Box>
   );
 };
 

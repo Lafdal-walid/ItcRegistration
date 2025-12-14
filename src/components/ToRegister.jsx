@@ -62,6 +62,25 @@ const ToRegister = () => {
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          animation: "backgroundPulse 20s ease-in-out infinite",
+          "@keyframes backgroundPulse": {
+            "0%, 100%": { 
+              filter: "brightness(0.8) contrast(1.1)",
+              transform: "scale(1)"
+            },
+            "25%": { 
+              filter: "brightness(0.9) contrast(1.05)",
+              transform: "scale(1.02)"
+            },
+            "50%": { 
+              filter: "brightness(0.85) contrast(1.15)",
+              transform: "scale(1.01)"
+            },
+            "75%": { 
+              filter: "brightness(0.95) contrast(1.08)",
+              transform: "scale(1.015)"
+            }
+          }
         }}
       />
       <Box
@@ -70,13 +89,40 @@ const ToRegister = () => {
         alt="overlay"
         sx={{
           position: "absolute",
-          top: "50%",
-          left: "50%",
-          right: "50%",
-          transform: "translate(-50%, -100%)",
+          top: "52.5%",
+          left: "49%",
+          transform: "translate(-50%, -50%)",
           maxWidth: screenWidth > 776 ? "60%" : "80%",
-          maxHeight: "60%",
-          zIndex: 1,
+          maxHeight: screenWidth > 776 ? "60%" : "80%",
+          zIndex: 0,
+          animation: "float 8s ease-in-out infinite, pulse 6s ease-in-out infinite, glow 10s ease-in-out infinite",
+          "@keyframes float": {
+            "0%, 100%": { transform: "translate(-50%, -50%) translateY(0px) scale(1)" },
+            "50%": { transform: "translate(-50%, -50%) translateY(-15px) scale(1.02)" }
+          },
+          "@keyframes pulse": {
+            "0%, 100%": { 
+              opacity: 1, 
+              transform: "translate(-50%, -50%) scale(1)",
+              filter: "brightness(1) drop-shadow(0 0 10px rgba(230, 23, 7, 0.2))"
+            },
+            "50%": { 
+              opacity: 0.95, 
+              transform: "translate(-50%, -50%) scale(1.03)",
+              filter: "brightness(1.05) drop-shadow(0 0 20px rgba(230, 23, 7, 0.4))"
+            }
+          },
+          "@keyframes glow": {
+            "0%, 100%": { 
+              filter: "brightness(1) drop-shadow(0 0 8px rgba(230, 23, 7, 0.15))"
+            },
+            "33%": { 
+              filter: "brightness(1.08) drop-shadow(0 0 18px rgba(230, 23, 7, 0.3))"
+            },
+            "66%": { 
+              filter: "brightness(1.04) drop-shadow(0 0 12px rgba(230, 23, 7, 0.25))"
+            }
+          }
         }}
       />
 
@@ -96,12 +142,12 @@ const ToRegister = () => {
           variant="h2"
           sx={{
             fontFamily: '"Poppins-Regular", sans-serif',
-            fontSize: screenWidth > 776 ? "52px" : "33px",
-            fontWeight: 400,
+            fontSize: screenWidth > 776 ? "50px" : "33px",
+            fontWeight: 600,
             marginBottom: "30px",
-            marginTop: screenWidth > 776 ? "100px" : "0px",
+            marginTop: screenWidth > 776 ? "40px" : "0px",
             lineHeight: screenWidth > 776 ? "60px" : "55px",
-            background: "#FFFFFF",
+            background: "linear-gradient(90deg, #aaaaaaff 0%, #dfdfdf 60%, #f2f2f2 70%, #ffffff 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -109,13 +155,9 @@ const ToRegister = () => {
             maxWidth: "100%",
           }}
         >
-          {screenWidth > 776 ? (
-            <>
+          
               The Coding Challenge That<br></br> Pushes Your Limits
-            </>
-          ) : (
-            "The Coding Challenge That Pushes Your Limits"
-          )}
+          
         </Typography>
 
         <Typography
@@ -124,10 +166,13 @@ const ToRegister = () => {
             fontFamily: "Poppins",
             fontSize: screenWidth > 776 ? "18px" : "15px",
             fontWeight: 400,
-            marginBottom: "30px",
+            marginBottom: "42px",
             marginTop: screenWidth > 776 ? "25px" : "30px",
             opacity: 0.9,
-            color: "#555555",
+            background: "linear-gradient(90deg, #9b9b9b 0%, #bdbdbd 35%, #e0e0e0 70%, #ffffff 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
           }}
         >
           Problem-solving competition. Real problems. Real solutions. Code in
