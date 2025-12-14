@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Logo from "../assets/Logo.svg";
@@ -6,9 +6,36 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "../theme.js";
 
 const NavHead = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = navRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Box
+        ref={navRef}
         component="header"
         sx={{
           display: "flex",
@@ -22,6 +49,9 @@ const NavHead = () => {
           right: 0,
           zIndex: 1000,
           fontFamily: '"Poppins-Regular", sans-serif',
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(-20px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
         {/* Logo */}

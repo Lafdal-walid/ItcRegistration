@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ToRegister from "../components/ToRegister";
 import NavHead from "../components/NavHead.jsx";
 import {
@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import EventDescription from "../components/EventDescription.jsx";
@@ -21,11 +22,20 @@ import rightBK from "../assets/rightBK.svg";
 import leftBK from "../assets/leftBK.svg";
 import bkMed from "../assets/bkMed.svg";
 import CountdownCard from "../components/CountdownCard.jsx";
+import Footer from "../components/Footer.jsx";
 
 const Home = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [visibleSections, setVisibleSections] = useState(new Set());
+
+  // Refs for scroll animations
+  const partnershipRef = useRef(null);
+  const sponsorsRef = useRef(null);
+  const agendaRef = useRef(null);
+  const locationRef = useRef(null);
+  const timerRef = useRef(null);
 
   React.useEffect(() => {
     setIsMobile(window.innerWidth < 992);
@@ -38,6 +48,45 @@ const Home = () => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => new Set(prev).add(entry.target.id));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const refs = [
+      { ref: partnershipRef, id: "partnership" },
+      { ref: sponsorsRef, id: "sponsors" },
+      { ref: agendaRef, id: "agenda" },
+      { ref: locationRef, id: "location" },
+      { ref: timerRef, id: "timer" },
+    ];
+
+    const currentRefs = refs.map(({ ref }) => ref.current).filter(Boolean);
+    
+    refs.forEach(({ ref, id }) => {
+      const currentRef = ref.current;
+      if (currentRef) {
+        currentRef.id = id;
+        observer.observe(currentRef);
+      }
+    });
+
+    return () => {
+      currentRefs.forEach((currentRef) => {
+        if (currentRef) {
+          observer.unobserve(currentRef);
+        }
+      });
+    };
   }, []);
 
   const getMaxWidth = () => {
@@ -82,12 +131,18 @@ const Home = () => {
           <IconButton
             onClick={toggleDrawer(true)}
             sx={{
-              backgroundColor: "rgba(10, 8, 8, 0.97)",
+              backgroundColor: "rgba(186, 185, 185, 0.1)",
               color: "#BAB9B9",
+              border: "1px solid rgba(186, 185, 185, 0.3)",
+              backdropFilter: "blur(10px)",
+              boxShadow: "0px 2px 8px rgba(186, 185, 185, 0.15)",
               "&:hover": {
-                backgroundColor: "rgba(10, 8, 8, 0.97)",
-                color: "#E61707",
+                backgroundColor: "rgba(186, 185, 185, 0.2)",
+                color: "#FFFFFF",
+                transform: "scale(1.05)",
+                boxShadow: "0px 3px 12px rgba(186, 185, 185, 0.25)",
               },
+              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           >
             <MenuIcon />
@@ -101,19 +156,59 @@ const Home = () => {
         onClose={toggleDrawer(false)}
         sx={{
           "& .MuiDrawer-paper": {
-            backgroundColor: "rgba(10, 8, 8, 0.97)",
-            width: 250,
+            background: "linear-gradient(135deg, rgba(10, 8, 8, 0.95) 0%, rgba(20, 15, 15, 0.98) 100%)",
+            backdropFilter: "blur(20px)",
+            border: "1px solid rgba(186, 185, 185, 0.2)",
+            borderRight: "2px solid rgba(186, 185, 185, 0.4)",
+            width: 280,
+            boxShadow: "0px 0px 20px rgba(186, 185, 185, 0.15)",
+            position: "relative",
+            overflow: "hidden",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: "-100%",
+              width: "100%",
+              height: "100%",
+              background: "linear-gradient(90deg, transparent, rgba(186, 185, 185, 0.1), transparent)",
+              animation: "shimmer 3s infinite",
+            },
+            "@keyframes shimmer": {
+              "0%": { left: "-100%" },
+              "100%": { left: "100%" },
+            },
           },
         }}
       >
         <Box
-          sx={{ width: 250, padding: 2 }}
+          sx={{ 
+            width: 280, 
+            padding: 3,
+            background: "linear-gradient(180deg, rgba(186, 185, 185, 0.05) 0%, transparent 100%)",
+            position: "relative",
+            zIndex: 1,
+          }}
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#BAB9B9",
+              fontFamily: '"Poppins", sans-serif',
+              fontWeight: 600,
+              fontSize: "20px",
+              marginBottom: 3,
+              textAlign: "center",
+              textShadow: "0px 1px 5px rgba(186, 185, 185, 0.2)",
+            }}
+          >
+            Menu
+          </Typography>
           <List>
-            {menuItems.map((item) => (
+            {menuItems.map((item, index) => (
               <ListItem
                 key={item}
                 component="a"
@@ -121,15 +216,35 @@ const Home = () => {
                 sx={{
                   color: "#BAB9B9",
                   textDecoration: "none",
-                  fontSize: "15px",
-                  fontWeight: "300",
-                  transition: "0.3s ease",
+                  fontSize: "16px",
+                  fontWeight: 400,
+                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  borderRadius: "12px",
+                  marginBottom: 1,
+                  padding: "12px 20px",
+                  background: "linear-gradient(135deg, rgba(186, 185, 185, 0.05) 0%, transparent 100%)",
+                  border: "1px solid rgba(186, 185, 185, 0.1)",
+                  position: "relative",
+                  zIndex: 2,
                   "&:hover": {
-                    color: "#E61707",
+                    color: "#FFFFFF",
+                    background: "linear-gradient(135deg, rgba(186, 185, 185, 0.2) 0%, rgba(186, 185, 185, 0.1) 100%)",
+                    border: "1px solid rgba(186, 185, 185, 0.3)",
+                    transform: "translateX(8px)",
+                    boxShadow: "0px 2px 10px rgba(186, 185, 185, 0.15)",
                   },
+                  animation: `slideIn 0.3s ease-out ${index * 0.1}s both`,
                 }}
               >
-                <ListItemText primary={item} />
+                <ListItemText 
+                  primary={item}
+                  sx={{
+                    "& .MuiListItemText-primary": {
+                      fontFamily: '"Poppins", sans-serif',
+                      fontWeight: 500,
+                    }
+                  }}
+                />
               </ListItem>
             ))}
           </List>
@@ -139,12 +254,16 @@ const Home = () => {
       <EventDescription pb="900px" />
 
       <Box
+        ref={partnershipRef}
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           marginTop: screenWidth > 776 ? "00px" : "60px",
           marginBottom: "20px",
+          opacity: visibleSections.has("partnership") ? 1 : 0,
+          transform: visibleSections.has("partnership") ? "translateY(0)" : "translateY(30px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
         <img
@@ -164,13 +283,21 @@ const Home = () => {
           fontSize: screenWidth > 776 ? "30px" : "22px",
           fontWeight: 500,
           marginBottom: "20px",
-          opacity: 0.9,
+          opacity: visibleSections.has("partnership") ? 0.95 : 0,
           color: "#BAB9B9",
           marginTop: "20px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           padding: "10px",
+          background: "linear-gradient(135deg, #BAB9B9 0%, #E8E8E8 50%, #D0D0D0 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.15))",
+          letterSpacing: "0.3px",
+          transform: visibleSections.has("partnership") ? "translateY(0)" : "translateY(20px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
         }}
       >
         Hosted in Partnership with
@@ -183,6 +310,9 @@ const Home = () => {
           alignItems: "center",
           marginTop: "20px",
           marginBottom: "20px",
+          opacity: visibleSections.has("partnership") ? 1 : 0,
+          transform: visibleSections.has("partnership") ? "scale(1)" : "scale(0.8)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s",
         }}
       >
         <img
@@ -202,12 +332,21 @@ const Home = () => {
           fontSize: screenWidth > 776 ? "16px" : "14px",
           fontWeight: 400,
           marginBottom: "20px",
-          opacity: 0.9,
+          opacity: visibleSections.has("partnership") ? 0.9 : 0,
           color: "#BAB9B9",
           marginTop: screenWidth > 776 ? "40px" : "30px",
           textAlign: "center",
           paddingLeft: "50px",
           paddingRight: "50px",
+          background: "linear-gradient(135deg, #BAB9B9 0%, #E0E0E0 50%, #C8C8C8 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0px 1px 2px rgba(0,0,0,0.1))",
+          letterSpacing: "0.2px",
+          lineHeight: 1.5,
+          transform: visibleSections.has("partnership") ? "translateY(0)" : "translateY(20px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s",
         }}
       >
         {screenWidth > 776 ? (
@@ -233,18 +372,27 @@ const Home = () => {
       </Typography>
 
       <Typography
+        ref={sponsorsRef}
         variant="body1"
         sx={{
           fontFamily: "Poppins",
           fontSize: "40px",
           fontWeight: 500,
           marginBottom: "20px",
-          opacity: 0.9,
+          opacity: visibleSections.has("sponsors") ? 0.95 : 0,
           color: "#BAB9B9",
           marginTop: "70px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          background: "linear-gradient(135deg, #BAB9B9 0%, #E8E8E8 50%, #D0D0D0 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.15))",
+          letterSpacing: "0.4px",
+          transform: visibleSections.has("sponsors") ? "translateY(0)" : "translateY(30px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
         Our Sponsors
@@ -261,7 +409,7 @@ const Home = () => {
           padding: screenWidth > 776 ? "15px" : "30px",
         }}
       >
-        {[1, 2, 3, 4, 5].map((item) => (
+        {[1, 2, 3, 4, 5].map((item, index) => (
           <Box
             key={item}
             sx={{
@@ -270,24 +418,37 @@ const Home = () => {
               borderRadius: "50%",
               backgroundColor: "#D9D9D966",
               flex: "0 0 auto",
+              opacity: visibleSections.has("sponsors") ? 1 : 0,
+              transform: visibleSections.has("sponsors") ? "scale(1) rotate(0deg)" : "scale(0) rotate(180deg)",
+              transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
+              transitionDelay: visibleSections.has("sponsors") ? `${index * 0.1}s` : "0s",
             }}
           />
         ))}
       </Box>
 
       <Typography
+        ref={agendaRef}
         variant="body1"
         sx={{
           fontFamily: "Poppins",
           fontSize: "45px",
           fontWeight: 600,
           marginBottom: "20px",
-          opacity: 0.9,
+          opacity: visibleSections.has("agenda") ? 0.95 : 0,
           color: "#BAB9B9",
           marginTop: screenWidth > 776 ? "110px" : "40px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          background: "linear-gradient(135deg, #BAB9B9 0%, #E8E8E8 50%, #D0D0D0 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.15))",
+          letterSpacing: "0.5px",
+          transform: visibleSections.has("agenda") ? "translateY(0)" : "translateY(30px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
         Agenda
@@ -300,16 +461,32 @@ const Home = () => {
           fontWeight: 400,
           mb: "10px",
           mt: "20px",
-          opacity: 0.9,
+          opacity: visibleSections.has("agenda") ? 0.9 : 0,
           color: "#BAB9B9",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           gap: "4px",
+          background: "linear-gradient(135deg, #BAB9B9 0%, #E0E0E0 50%, #C8C8C8 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0px 1px 2px rgba(0,0,0,0.1))",
+          letterSpacing: "0.2px",
+          transform: visibleSections.has("agenda") ? "translateY(0)" : "translateY(20px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
         }}
       >
         <span>The Great challenge of ITCP 4.0 will be at</span>
-        <span style={{ color: "#E61707", fontWeight: 500 }}>
+        <span style={{ 
+          color: "#E61707", 
+          fontWeight: 500,
+          background: "linear-gradient(135deg, #E61707 0%, #FF4444 50%, #CC0000 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0px 1px 2px rgba(230,23,7,0.2))"
+        }}>
           21-22 December
         </span>
       </Box>
@@ -321,6 +498,9 @@ const Home = () => {
           alignItems: "center",
           marginTop: "30px",
           marginBottom: "30px",
+          opacity: visibleSections.has("agenda") ? 1 : 0,
+          transform: visibleSections.has("agenda") ? "translateX(0)" : "translateX(-50px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s",
         }}
       >
         <img
@@ -336,18 +516,32 @@ const Home = () => {
       </Box>
 
       <Typography
+        ref={locationRef}
         variant="body1"
         sx={{
           fontFamily: "Poppins",
           fontSize: screenWidth > 776 ? "45px" : "28px",
           fontWeight: 600,
           marginBottom: "20px",
-          opacity: 0.9,
+          opacity: visibleSections.has("location") ? 0.95 : 0,
           color: "#BAB9B9",
           marginTop: screenWidth > 776 ? "-40px" : "-40px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          textShadow: `
+            0px 1px 2px rgba(0,0,0,0.3),
+            0px 0px 15px rgba(186,185,185,0.1)
+          `,
+          letterSpacing: "0.4px",
+          lineHeight: 1.1,
+          background: "linear-gradient(135deg, #BAB9B9 0%, #D4D3D3 50%, #BAB9B9 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.2))",
+          transform: visibleSections.has("location") ? "translateY(0)" : "translateY(30px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
         Location
@@ -359,12 +553,20 @@ const Home = () => {
           fontSize: screenWidth > 776 ? "18px" : "10px",
           fontWeight: 600,
           marginBottom: "px",
-          opacity: 0.9,
+          opacity: visibleSections.has("location") ? 0.9 : 0,
           color: "#BAB9B9",
           marginTop: screenWidth > 776 ? "0px" : "-10px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          textShadow: `
+            0px 1px 1px rgba(0,0,0,0.2),
+            0px 0px 8px rgba(186,185,185,0.05)
+          `,
+          letterSpacing: "0.2px",
+          lineHeight: 1.3,
+          transform: visibleSections.has("location") ? "translateY(0)" : "translateY(20px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
         }}
       >
         The N 1, lot alioua fodil, Chéraga 16014, Algiers
@@ -377,6 +579,9 @@ const Home = () => {
           alignItems: "center",
           marginTop: screenWidth > 776 ? "0px" : "20px",
           marginBottom: "20px",
+          opacity: visibleSections.has("location") ? 1 : 0,
+          transform: visibleSections.has("location") ? "translateX(0)" : "translateX(50px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s",
         }}
       >
         <img
@@ -391,6 +596,7 @@ const Home = () => {
 
       {/* Timer Section with Background Overlay */}
       <Box
+        ref={timerRef}
         sx={{
           position: "relative",
           width: "100vw",
@@ -399,6 +605,9 @@ const Home = () => {
           margin: 0,
           padding: "80px 20px",
           boxSizing: "border-box",
+          opacity: visibleSections.has("timer") ? 1 : 0,
+          transform: visibleSections.has("timer") ? "translateY(0)" : "translateY(50px)",
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
         {/* Background Images */}
@@ -475,9 +684,8 @@ const Home = () => {
               style={{
                 maxWidth: screenWidth > 776 ? "300px" : "130px",
                 height: screenWidth > 776 ? "80px" : "45px",
-                marginBottom :screenWidth > 776 ? "0px" : "20px",
-                marginTop :"30px",
-
+                marginBottom: screenWidth > 776 ? "0px" : "20px",
+                marginTop: "30px",
               }}
             />
           </Box>
@@ -489,11 +697,22 @@ const Home = () => {
               fontSize: screenWidth > 776 ? "45px" : "20px",
               fontWeight: 600,
               marginBottom: "20px",
-              opacity: 0.9,
+              opacity: 0.95,
               color: "#BAB9B9",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              textShadow: `
+                0px 1px 2px rgba(0,0,0,0.3),
+                0px 0px 15px rgba(186,185,185,0.1)
+              `,
+              letterSpacing: "0.5px",
+              lineHeight: 1.1,
+              background: "linear-gradient(135deg, #BAB9B9 0%, #D4D3D3 50%, #BAB9B9 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.2))",
             }}
           >
             The battle begins in
@@ -505,12 +724,21 @@ const Home = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              gap: screenWidth > 1200 ? "100px" : screenWidth > 992 ? "80px" : screenWidth > 776 ? "80px" : screenWidth > 600 ? "60px" : "40px",
+              gap:
+                screenWidth > 1200
+                  ? "100px"
+                  : screenWidth > 992
+                  ? "80px"
+                  : screenWidth > 776
+                  ? "80px"
+                  : screenWidth > 600
+                  ? "60px"
+                  : "40px",
               marginTop: "40px",
               flexWrap: "nowrap",
               width: "100%",
               overflowX: "auto",
-              padding :"10px"
+              padding: "10px",
             }}
           >
             {/* Days */}
@@ -537,8 +765,119 @@ const Home = () => {
               gradientAngle={165.157}
             />
           </Box>
+          <Typography
+            variant="body1"
+            sx={{
+              fontFamily: "Poppins",
+              fontSize: screenWidth > 776 ? "40px" : "20px",
+              fontWeight: 600,
+              marginBottom: "20px",
+              opacity: 0.95,
+              color: "#BAB9B9",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: screenWidth > 776 ? "60px" : "20px",
+              textShadow: `
+                0px 1px 2px rgba(0,0,0,0.3),
+                0px 0px 20px rgba(186,185,185,0.1)
+              `,
+              letterSpacing: "0.3px",
+              lineHeight: 1.2,
+              background: "linear-gradient(135deg, #BAB9B9 0%, #D4D3D3 50%, #BAB9B9 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.2))",
+            }}
+          >
+            Don't Miss Out Your chance
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "20px",
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                position: "relative",
+                borderRadius: "30px",
+                padding: "12px 35px",
+                fontSize: "14px",
+                fontFamily: "'Poppins', sans-serif",
+                fontWeight: 600,
+                textTransform: "none",
+                color: "#ffffff",
+                background:
+                  "radial-gradient(ellipse 15px 3px at 50% 50%, rgba(168,26,19,1) 0%, rgba(230,23,7,1) 100%)",
+                boxShadow: `
+                    0px 0px 120px 0px rgba(230,23,7,0.4),
+                    0px 0px 20px 0px rgba(230,23,7,0.3),
+                    0px 0px 0.4315px 1.7265px rgba(255,255,255,0.2),
+                    inset 0px -2px 1px 0px rgba(0,0,0,0.3),
+                    inset 0px 1px 0.5px 0px rgba(255,255,255,0.3)
+                  `,
+                overflow: "hidden",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  left: "-100%",
+                  width: "100%",
+                  height: "100%",
+                  background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                  transition: "left 0.5s",
+                },
+                "&:hover": {
+                  background:
+                    "radial-gradient(ellipse 18px 4px at 50% 50%, rgba(188,26,19,1) 0%, rgba(250,23,7,1) 100%)",
+                  boxShadow: `
+                      0px 0px 150px 0px rgba(230,23,7,0.6),
+                      0px 0px 30px 0px rgba(230,23,7,0.4),
+                      0px 0px 0.4315px 1.7265px rgba(255,255,255,0.3),
+                      inset 0px -2px 1px 0px rgba(0,0,0,0.2),
+                      inset 0px 1px 0.5px 0px rgba(255,255,255,0.4)
+                    `,
+                  transform: "translateY(-2px)",
+                  "&::before": {
+                    left: "100%",
+                  },
+                },
+                "&:active": {
+                  transform: "translateY(0) scale(0.98)",
+                  boxShadow: `
+                      0px 0px 100px 0px rgba(230,23,7,0.5),
+                      0px 0px 15px 0px rgba(230,23,7,0.3)
+                    `,
+                },
+              }}
+            >
+              <Box
+                component="span"
+                sx={{
+                  position: "relative",
+                  zIndex: 1,
+                  textShadow: `
+                    0px 0px 10px rgba(255,255,255,0.5),
+                    0px 0px 20px rgba(230,23,7,0.3),
+                    0px 2px 4px rgba(0,0,0,0.3)
+                  `,
+                  letterSpacing: "0.5px",
+                }}
+              >
+                Register Now
+              </Box>
+            </Button>
+          </Box>
         </Box>
       </Box>
+      <Footer />
     </>
   );
 };

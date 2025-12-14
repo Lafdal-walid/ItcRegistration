@@ -1,14 +1,44 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 
 const CountdownCard = ({ number, label, screenWidth, gradientAngle }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = cardRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
   return (
     <Box
+      ref={cardRef}
       sx={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         gap: "10px",
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.8)",
+        transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
       {/* CARD */}

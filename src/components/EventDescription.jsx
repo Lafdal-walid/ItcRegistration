@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import bk2 from "../assets/bk2.png";
 import Logo2 from "../assets/Logo2.svg";
@@ -14,6 +14,8 @@ import ve4 from "../assets/cards/ve4.svg";
 
 const EventDescription = ({ pb = {} }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
   const paddingBottom = typeof pb === "string" ? pb : pb.pb || "900px";
 
   useEffect(() => {
@@ -22,8 +24,32 @@ const EventDescription = ({ pb = {} }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
   return (
     <Box
+      ref={sectionRef}
       sx={{
         position: "relative",
         width: "100vw",
@@ -33,7 +59,9 @@ const EventDescription = ({ pb = {} }) => {
         padding: "80px 20px",
         boxSizing: "border-box",
         paddingBottom: paddingBottom,
-
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(50px)",
+        transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
         "@media (max-width: 992px)": {
           paddingBottom: "1250px",
         },

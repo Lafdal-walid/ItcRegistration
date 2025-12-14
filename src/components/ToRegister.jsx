@@ -1,24 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import bkImage from "../assets/bkImage.png";
 import overlayImage from "../assets/overlayImage.png";
 
 const ToRegister = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
   return (
     <Box
+      ref={sectionRef}
       sx={{
         width: "100%",
         height: "100vh",
         backgroundColor: "#000000",
         position: "relative",
         zIndex: 0,
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(50px)",
+        transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
       <Box
@@ -108,37 +138,74 @@ const ToRegister = () => {
           variant="contained"
           sx={{
             position: "relative",
-            borderRadius: "25.427px",
-            padding: "8px 40px",
-            fontSize: "12px",
+            borderRadius: "30px",
+            padding: "12px 35px",
+            fontSize: "14px",
             fontFamily: "'Poppins', sans-serif",
+            fontWeight: 600,
             textTransform: "none",
             color: "#ffffff",
             background:
-              "radial-gradient(ellipse 10.1px 2.3739px at 50% 50%, rgba(168,26,19,1) 0%, rgba(230,23,7,1) 100%)",
+              "radial-gradient(ellipse 15px 3px at 50% 50%, rgba(168,26,19,1) 0%, rgba(230,23,7,1) 100%)",
             boxShadow: `
-                0px 0px 100.98025px 0px rgba(41,121,255,0.376),
-                0px 0px 0.4315px 1.7265px rgba(255,255,255,0.1),
-                inset 0px -1.7265px 0.863px 0px rgba(0,0,0,0.25),
-                inset 0px 0.863px 0.4315px 0px rgba(255,255,255,0.25)
+                0px 0px 120px 0px rgba(230,23,7,0.4),
+                0px 0px 20px 0px rgba(230,23,7,0.3),
+                0px 0px 0.4315px 1.7265px rgba(255,255,255,0.2),
+                inset 0px -2px 1px 0px rgba(0,0,0,0.3),
+                inset 0px 1px 0.5px 0px rgba(255,255,255,0.3)
               `,
             overflow: "hidden",
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: "-100%",
+              width: "100%",
+              height: "100%",
+              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+              transition: "left 0.5s",
+            },
             "&:hover": {
               background:
-                "radial-gradient(ellipse 10.1px 2.3739px at 50% 50%, rgba(188,26,19,1) 0%, rgba(250,23,7,1) 100%)",
+                "radial-gradient(ellipse 18px 4px at 50% 50%, rgba(188,26,19,1) 0%, rgba(250,23,7,1) 100%)",
               boxShadow: `
-                  0px 0px 113.99925px 0px rgba(41,121,255,0.456),
-                  0px 0px 0.4315px 1.7265px rgba(255,255,255,0.15),
-                  inset 0px -0.7265px 0.863px 0px rgba(0,0,0,0.25),
-                  inset 0px 0.363px 0.4315px 0px rgba(255,255,255,0.25)
+                  0px 0px 150px 0px rgba(230,23,7,0.6),
+                  0px 0px 30px 0px rgba(230,23,7,0.4),
+                  0px 0px 0.4315px 1.7265px rgba(255,255,255,0.3),
+                  inset 0px -2px 1px 0px rgba(0,0,0,0.2),
+                  inset 0px 1px 0.5px 0px rgba(255,255,255,0.4)
                 `,
+              transform: "translateY(-2px)",
+              "&::before": {
+                left: "100%",
+              },
             },
             "&:active": {
-              transform: "scale(0.98)",
+              transform: "translateY(0) scale(0.98)",
+              boxShadow: `
+                  0px 0px 100px 0px rgba(230,23,7,0.5),
+                  0px 0px 15px 0px rgba(230,23,7,0.3)
+                `,
             },
           }}
         >
-          Register Now
+          <Box
+            component="span"
+            sx={{
+              position: "relative",
+              zIndex: 1,
+              textShadow: `
+                0px 0px 10px rgba(255,255,255,0.5),
+                0px 0px 20px rgba(230,23,7,0.3),
+                0px 2px 4px rgba(0,0,0,0.3)
+              `,
+              letterSpacing: "0.5px",
+            }}
+          >
+            Register Now
+          </Box>
         </Button>
       </Box>
     </Box>
