@@ -60,8 +60,8 @@ const NavHead = () => {
             component="img"
             src={Logo}
             sx={{
-              width: "55px",
-              height: "55px",
+              width: "40px",
+              height: "45px",
               marginTop: "7px",
             }}
           />
