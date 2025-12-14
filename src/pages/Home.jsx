@@ -908,7 +908,7 @@ const Home = () => {
               fontFamily: "Poppins",
               fontSize: screenWidth > 776 ? "40px" : "20px",
               fontWeight: 600,
-              marginBottom: screenWidth > 776 ? "20px" : "0px",
+              marginBottom: screenWidth > 776 ? "20px" : "10px",
               opacity: 0.95,
               color: "#BAB9B9",
               display: "flex",
@@ -943,8 +943,8 @@ const Home = () => {
               sx={{
                 position: "relative",
                 borderRadius: "30px",
-                padding: "12px 35px",
-                fontSize: "14px",
+                padding: "12px 30px",
+                fontSize: "12px",
                 fontFamily: "'Poppins', sans-serif",
                 fontWeight: 600,
                 textTransform: "none",
@@ -1015,7 +1015,7 @@ const Home = () => {
           </Box>
         </Box>
       </Box>
-      <Footer sx={{marginTop:"-100px"}} />
+      <Footer sx={{marginTop: screenWidth > 776 ? "-180px" : "-50px"}} />
     </Box>
   );
 };

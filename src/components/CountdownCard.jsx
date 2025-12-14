@@ -79,7 +79,7 @@ const CountdownCard = ({ number, label, screenWidth, gradientAngle, animationDel
       <Typography
         sx={{
           fontFamily: "Poppins",
-          fontSize: 1200 ? "20px" : screenWidth > 992 ? "14px" : screenWidth > 776 ? "10px" : screenWidth > 600 ? "4px" : "4px",
+          fontSize: screenWidth > 1200 ? "24px" : screenWidth > 992 ? "20px" : screenWidth > 776 ? "16px" : screenWidth > 600 ? "14px" : "10px",
           fontWeight: 500,
           letterSpacing: "0.8px",
           background: `linear-gradient(${gradientAngle}deg, rgb(255, 255, 255) 19.384%, rgba(255, 255, 255, 0.6) 131.08%)`,
