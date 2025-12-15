@@ -136,6 +136,7 @@ const ToRegister = () => {
 
       {/* Text Content and Button */}
       <Box
+        data-home="true"
         sx={{
           position: "absolute",
           top: "52%",
@@ -189,11 +190,15 @@ const ToRegister = () => {
         </Typography>
 
         <Button
+          component="a"
+          href="https://tripetto.app/run/W2DH3X7OBR"
+          target="_blank"
+          rel="noopener noreferrer"
           variant="contained"
           sx={{
             position: "relative",
             borderRadius: "30px",
-            padding: "12px 35px",
+            padding: "15px 44px",
             fontSize: "14px",
             fontFamily: "'Poppins', sans-serif",
             fontWeight: 600,

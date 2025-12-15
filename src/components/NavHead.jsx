@@ -1,11 +1,51 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Logo from "../assets/Logo.svg";
 import { ThemeProvider } from "@emotion/react";
 import theme from "../theme.js";
 
 const NavHead = () => {
+  // Scroll to section function
+  const scrollToSection = (sectionName) => {
+    let ref;
+    switch(sectionName) {
+      case 'Home':
+        const homeSection = document.querySelector('[data-home="true"]');
+        if (homeSection) {
+          homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return;
+      case 'About':
+        const aboutSection = document.querySelector('[data-about="true"]');
+        if (aboutSection) {
+          aboutSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Scroll up 200px after the initial scroll
+          setTimeout(() => {
+            window.scrollBy({ top: -200, behavior: 'smooth' });
+          }, 500);
+        }
+        return;
+      case 'Partners':
+        ref = document.getElementById('partnership');
+        break;
+      case 'Agenda':
+        ref = document.getElementById('agenda');
+        break;
+      case 'Location':
+        ref = document.getElementById('location');
+        break;
+      case 'Count':
+        ref = document.getElementById('timer');
+        break;
+      default:
+        return;
+    }
+    
+    if (ref) {
+      ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const [isVisible, setIsVisible] = useState(false);
   const navRef = useRef(null);
 
@@ -78,21 +118,24 @@ const NavHead = () => {
         >
           {["Home", "About", "Partners", "Agenda", "Location", "Count"].map(
             (item) => (
-              <Link
+              <Box
                 key={item}
-                to={`/${item}`}
-                style={{
+                component="span"
+                onClick={() => scrollToSection(item)}
+                sx={{
                   color: '#BAB9B9',
                   textDecoration: "none",
                   fontSize: "15px",
                   fontWeight: "300",
                   transition: "0.3s ease",
+                  cursor: "pointer",
+                  '&:hover': {
+                    color: "#E61707"
+                  }
                 }}
-                onMouseOver={(e) => (e.target.style.color = "#E61707")}
-                onMouseOut={(e) => (e.target.style.color = "white")}
               >
                 {item}
-              </Link>
+              </Box>
             )
           )}
         </Box>

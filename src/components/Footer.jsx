@@ -3,9 +3,9 @@ import { Box, Typography, IconButton } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import { FaDiscord } from "react-icons/fa";
 import FooterIcon from "../assets/FooterIcon.svg";
 
 // Suppress ResizeObserver warning
@@ -21,6 +21,47 @@ const Footer = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isVisible, setIsVisible] = useState(false);
   const footerRef = useRef(null);
+
+  // Scroll to section function
+  const scrollToSection = (sectionName) => {
+    let ref;
+    switch(sectionName) {
+      case 'Home':
+        const homeSection = document.querySelector('[data-home="true"]');
+        if (homeSection) {
+          homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return;
+      case 'About':
+        const aboutSection = document.querySelector('[data-about="true"]');
+        if (aboutSection) {
+          aboutSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Scroll up 200px after the initial scroll
+          setTimeout(() => {
+            window.scrollBy({ top: -200, behavior: 'smooth' });
+          }, 500);
+        }
+        return;
+      case 'Partners':
+        ref = document.getElementById('partnership');
+        break;
+      case 'Agenda':
+        ref = document.getElementById('agenda');
+        break;
+      case 'Location':
+        ref = document.getElementById('location');
+        break;
+      case 'count':
+        ref = document.getElementById('timer');
+        break;
+      default:
+        return;
+    }
+    
+    if (ref) {
+      ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -70,17 +111,8 @@ const Footer = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          background: `
-            radial-gradient(circle at 20% 50%, rgba(230, 23, 7, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 40% 20%, rgba(186, 185, 185, 0.05) 0%, transparent 50%)
-          `,
-          animation: "gradientShift 15s ease infinite",
-          "@keyframes gradientShift": {
-            "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
-            "33%": { transform: "translate(-20px, -20px) rotate(120deg)" },
-            "66%": { transform: "translate(20px, -10px) rotate(240deg)" },
-          },
+          backgroundColor: "#070809",
+          animation: "none",
         },
       }}
     >
@@ -158,6 +190,7 @@ const Footer = () => {
                   fontSize: screenWidth > 776 ? "14px" : "12px",
                   lineHeight: "1.5",
                   opacity: 0.9,
+                  color: "#FFFFFF",
                 }}
               >
                 University of Blida1
@@ -212,6 +245,10 @@ const Footer = () => {
               }}
             >
               <IconButton
+                component="a"
+                href="https://www.instagram.com/it_community/?hl=fr"
+                target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   backgroundColor: "rgba(255, 255, 255, 0.05)",
                   color: "#BAB9B9",
@@ -257,6 +294,10 @@ const Footer = () => {
                 <InstagramIcon />
               </IconButton>
               <IconButton
+                component="a"
+                href="https://discord.com/channels/964583970618638356"
+                target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   backgroundColor: "rgba(255, 255, 255, 0.05)",
                   color: "#BAB9B9",
@@ -299,9 +340,13 @@ const Footer = () => {
                   },
                 }}
               >
-                <TwitterIcon />
+                <FaDiscord style={{ fontSize: '24px' }} />
               </IconButton>
               <IconButton
+                component="a"
+                href="https://www.linkedin.com/company/it-community/posts/?feedView=all"
+                target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   backgroundColor: "rgba(255, 255, 255, 0.05)",
                   color: "#BAB9B9",
@@ -347,6 +392,10 @@ const Footer = () => {
                 <LinkedInIcon />
               </IconButton>
               <IconButton
+                component="a"
+                href="https://www.facebook.com/itc.blida.1"
+                target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   backgroundColor: "rgba(255, 255, 255, 0.05)",
                   color: "#BAB9B9",
@@ -432,6 +481,10 @@ const Footer = () => {
                 }}
               >
                 <IconButton
+                  component="a"
+                  href="https://www.instagram.com/it_community/?hl=fr"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                     color: "#BAB9B9",
@@ -477,6 +530,10 @@ const Footer = () => {
                   <InstagramIcon />
                 </IconButton>
                 <IconButton
+                  component="a"
+                  href="https://discord.com/channels/964583970618638356"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                     color: "#BAB9B9",
@@ -519,9 +576,13 @@ const Footer = () => {
                     },
                   }}
                 >
-                  <TwitterIcon />
+                  <FaDiscord style={{ fontSize: '24px' }} />
                 </IconButton>
                 <IconButton
+                  component="a"
+                  href="https://www.linkedin.com/company/it-community/posts/?feedView=all"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                     color: "#BAB9B9",
@@ -567,6 +628,10 @@ const Footer = () => {
                   <LinkedInIcon />
                 </IconButton>
                 <IconButton
+                  component="a"
+                  href="https://www.facebook.com/itc.blida.1"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   sx={{
                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                     color: "#BAB9B9",
@@ -650,7 +715,8 @@ const Footer = () => {
                     opacity: 0.9,
                   }}
                 >
-                  itc@gmail.com
+                  contact.itc.blida@gmail.com
+
                 </Typography>
               </Box>
             </Box>
@@ -724,9 +790,11 @@ const Footer = () => {
               width: "100%",
             }}
           >
-            {["Home", "About", "Partners", "Agenda", "Location", "Sponsors"].map((item) => (
+            {["Home", "About", "Partners", "Agenda", "Location", "count"].map((item) => (
               <Typography
                 key={item}
+                component="span"
+                onClick={() => scrollToSection(item)}
                 sx={{
                   fontSize: screenWidth > 776 ? "14px" : "12px",
                   opacity: 0.8,

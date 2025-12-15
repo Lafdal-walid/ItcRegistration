@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 const CountdownCard = ({ label, screenWidth, gradientAngle, animationDelay = "0s" }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({ days: 0, minutes: 0, seconds: 0 });
   const cardRef = useRef(null);
 
   useEffect(() => {
@@ -37,13 +37,13 @@ const CountdownCard = ({ label, screenWidth, gradientAngle, animationDelay = "0s
 
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const totalMinutes = Math.floor(difference / (1000 * 60));
+        const minutes = totalMinutes % 60;
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-        setTimeLeft({ days, hours, minutes, seconds });
+        setTimeLeft({ days, minutes, seconds });
       } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        setTimeLeft({ days: 0, minutes: 0, seconds: 0 });
       }
     };
 
@@ -57,11 +57,9 @@ const CountdownCard = ({ label, screenWidth, gradientAngle, animationDelay = "0s
     switch (label.toLowerCase()) {
       case 'days':
         return timeLeft.days.toString().padStart(2, '0');
-      case 'hours':
-        return timeLeft.hours.toString().padStart(2, '0');
-      case 'minute':
+      case 'minutes':
         return timeLeft.minutes.toString().padStart(2, '0');
-      case 'second':
+      case 'seconds':
         return timeLeft.seconds.toString().padStart(2, '0');
       default:
         return '00';
@@ -86,8 +84,8 @@ const CountdownCard = ({ label, screenWidth, gradientAngle, animationDelay = "0s
       <Box
         sx={{
           position: "relative",
-          width: screenWidth > 1200 ? "200px" : screenWidth > 992 ? "160px" : screenWidth > 776 ? "140px" : screenWidth > 600 ? "120px" : "80px",
-          height: screenWidth > 1200 ? "200px" : screenWidth > 992 ? "160px" : screenWidth > 776 ? "140px" : screenWidth > 600 ? "120px" : "80px",
+          width: screenWidth > 1200 ? "170px" : screenWidth > 992 ? "160px" : screenWidth > 776 ? "140px" : screenWidth > 600 ? "120px" : "85px",
+          height: screenWidth > 1200 ? "170px" : screenWidth > 992 ? "160px" : screenWidth > 776 ? "140px" : screenWidth > 600 ? "120px" : "85px",
           borderRadius: screenWidth > 1200 ? "29px" : screenWidth > 992 ? "25px" : screenWidth > 776 ? "22px" : screenWidth > 600 ? "20px" : "18px",
           border: "0.435px solid rgba(255,255,255,0.08)",
           background:

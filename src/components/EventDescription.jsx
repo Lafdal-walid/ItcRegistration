@@ -67,6 +67,7 @@ const EventDescription = ({ pb = {} }) => {
     >
       {/* Background */}
       <Box
+        data-about="true"
         component="img"
         src={bk2}
         alt="background"
@@ -205,7 +206,7 @@ const EventDescription = ({ pb = {} }) => {
           />
 
           <CardPro
-            title="Level up"
+            title="Team"
             description="Push your skills to the next level."
             icon={<Box component="img" src={ic4} sx={{ width: "100%" }} />}
             background={ve4}

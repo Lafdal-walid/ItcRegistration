@@ -61,12 +61,28 @@ const CardPro = ({
           left: 0,
           width: "100%",
           height: "100%",
-          borderRadius: "3.461px",
-          border: "0.433px solid rgba(255,255,255,0.08)",
-          boxShadow: "0px 1.731px 1.731px 0px rgba(0,0,0,0.25)",
+          borderRadius: "8px",
+          border: "1px solid rgba(230, 23, 7, 0.3)",
+          boxShadow: `
+            0px 8px 40px rgba(230, 23, 7, 0.3),
+            0px 4px 20px rgba(0, 0, 0, 0.4),
+            0px 0px 60px rgba(230, 23, 7, 0.2),
+            inset 0px 0px 30px rgba(230, 23, 7, 0.08)
+          `,
           backdropFilter: "blur(0.5px)",
-          background: "#070809",
+          background: "rgba(7, 8, 9, 0.8)",
           zIndex: 1,
+          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          "&:hover": {
+            border: "1px solid rgba(230, 23, 7, 0.5)",
+            boxShadow: `
+              0px 12px 60px rgba(230, 23, 7, 0.4),
+              0px 6px 30px rgba(0, 0, 0, 0.5),
+              0px 0px 80px rgba(230, 23, 7, 0.3),
+              inset 0px 0px 40px rgba(230, 23, 7, 0.15)
+            `,
+            transform: "translateY(-2px)",
+          },
         }}
       />
 
@@ -79,14 +95,19 @@ const CardPro = ({
           width: "50px",
           height: "50px",
           borderRadius: "8px",
-          border: "0.433px solid rgba(255,255,255,0.18)",
-          boxShadow: "0px 1.731px 1.731px 0px rgba(0,0,0,0.25)",
+          border: "1px solid rgba(230, 23, 7, 0.4)",
+          boxShadow: `
+            0px 6px 25px rgba(230, 23, 7, 0.3),
+            0px 3px 12px rgba(0, 0, 0, 0.4),
+            inset 0px 0px 15px rgba(230, 23, 7, 0.15)
+          `,
           backdropFilter: "blur(0.5px)",
           background: "rgba(15, 17, 19, 0.9)",
           zIndex: 2,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
 
           "@media (max-width: 776px)": {
             left: "50%",

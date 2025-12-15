@@ -37,6 +37,47 @@ const Home = () => {
   const locationRef = useRef(null);
   const timerRef = useRef(null);
 
+  // Scroll to section function
+  const scrollToSection = (sectionName) => {
+    let ref;
+    switch (sectionName) {
+      case "Home":
+        const homeSection = document.querySelector('[data-home="true"]');
+        if (homeSection) {
+          homeSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        return;
+      case "About":
+        const aboutSection = document.querySelector('[data-about="true"]');
+        if (aboutSection) {
+          aboutSection.scrollIntoView({ behavior: "smooth", block: "center" });
+          // Scroll up 200px after the initial scroll
+          setTimeout(() => {
+            window.scrollBy({ top: -200, behavior: "smooth" });
+          }, 500);
+        }
+        return;
+      case "Partners":
+        ref = partnershipRef;
+        break;
+      case "Agenda":
+        ref = agendaRef;
+        break;
+      case "Location":
+        ref = locationRef;
+        break;
+      case "Count":
+        ref = timerRef;
+        break;
+      default:
+        return;
+    }
+
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   React.useEffect(() => {
     setIsMobile(window.innerWidth < 992);
     setScreenWidth(window.innerWidth);
@@ -107,15 +148,6 @@ const Home = () => {
     setDrawerOpen(open);
   };
 
-  const menuItems = [
-    "Home",
-    "About",
-    "Partners",
-    "Agenda",
-    "Location",
-    "Count",
-  ];
-
   return (
     <Box
       sx={{
@@ -140,23 +172,23 @@ const Home = () => {
           animation: "globalBackgroundShift 25s ease-in-out infinite",
           zIndex: -1,
           "@keyframes globalBackgroundShift": {
-            "0%, 100%": { 
+            "0%, 100%": {
               transform: "translate(0, 0) rotate(0deg) scale(1)",
-              filter: "brightness(1) hue-rotate(0deg)"
+              filter: "brightness(1) hue-rotate(0deg)",
             },
-            "25%": { 
+            "25%": {
               transform: "translate(-30px, -20px) rotate(90deg) scale(1.1)",
-              filter: "brightness(1.1) hue-rotate(10deg)"
+              filter: "brightness(1.1) hue-rotate(10deg)",
             },
-            "50%": { 
+            "50%": {
               transform: "translate(20px, -30px) rotate(180deg) scale(1.05)",
-              filter: "brightness(0.95) hue-rotate(-10deg)"
+              filter: "brightness(0.95) hue-rotate(-10deg)",
             },
-            "75%": { 
+            "75%": {
               transform: "translate(-20px, 30px) rotate(270deg) scale(1.08)",
-              filter: "brightness(1.05) hue-rotate(5deg)"
-            }
-          }
+              filter: "brightness(1.05) hue-rotate(5deg)",
+            },
+          },
         },
         "&::after": {
           content: '""',
@@ -172,20 +204,20 @@ const Home = () => {
           animation: "secondaryBackgroundMove 30s ease-in-out infinite reverse",
           zIndex: -1,
           "@keyframes secondaryBackgroundMove": {
-            "0%, 100%": { 
+            "0%, 100%": {
               transform: "translate(0, 0) scale(1)",
-              opacity: 0.5
+              opacity: 0.5,
             },
-            "33%": { 
+            "33%": {
               transform: "translate(40px, -40px) scale(1.2)",
-              opacity: 0.7
+              opacity: 0.7,
             },
-            "66%": { 
+            "66%": {
               transform: "translate(-40px, 40px) scale(0.9)",
-              opacity: 0.3
-            }
-          }
-        }
+              opacity: 0.3,
+            },
+          },
+        },
       }}
     >
       {!isMobile && <NavHead />}
@@ -288,52 +320,58 @@ const Home = () => {
             Menu
           </Typography>
           <List>
-            {menuItems.map((item, index) => (
-              <ListItem
-                key={item}
-                component="a"
-                href={`/${item}`}
-                sx={{
-                  color: "#BAB9B9",
-                  textDecoration: "none",
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                  borderRadius: "12px",
-                  marginBottom: 1,
-                  padding: "12px 20px",
-                  background:
-                    "linear-gradient(135deg, rgba(186, 185, 185, 0.05) 0%, transparent 100%)",
-                  border: "1px solid rgba(186, 185, 185, 0.1)",
-                  borderLeft: "2px solid rgba(230, 23, 7, 0.3)",
-                  borderRight: "2px solid rgba(230, 23, 7, 0.3)",
-                  position: "relative",
-                  zIndex: 2,
-                  "&:hover": {
-                    color: "#FFFFFF",
-                    background:
-                      "linear-gradient(135deg, rgba(186, 185, 185, 0.2) 0%, rgba(230, 23, 7, 0.05) 100%)",
-                    border: "1px solid rgba(186, 185, 185, 0.3)",
-                    borderLeft: "3px solid rgba(230, 23, 7, 0.6)",
-                    borderRight: "3px solid rgba(230, 23, 7, 0.6)",
-                    transform: "translateX(8px)",
-                    boxShadow: "0px 2px 10px rgba(186, 185, 185, 0.15)",
-                  },
-
-                  animation: `slideIn 0.3s ease-out ${index * 0.1}s both`,
-                }}
-              >
-                <ListItemText
-                  primary={item}
-                  sx={{
-                    "& .MuiListItemText-primary": {
-                      fontFamily: '"Poppins", sans-serif',
-                      fontWeight: 500,
-                    },
+            {["Home", "About", "Partners", "Agenda", "Location", "Count"].map(
+              (item, index) => (
+                <ListItem
+                  key={item}
+                  button
+                  onClick={() => {
+                    scrollToSection(item);
+                    setDrawerOpen(false);
                   }}
-                />
-              </ListItem>
-            ))}
+                  sx={{
+                    color: "#BAB9B9",
+                    textDecoration: "none",
+                    fontSize: "16px",
+                    fontWeight: 400,
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    borderRadius: "12px",
+                    marginBottom: 1,
+                    padding: "12px 20px",
+                    background:
+                      "linear-gradient(135deg, rgba(186, 185, 185, 0.05) 0%, transparent 100%)",
+                    border: "1px solid rgba(186, 185, 185, 0.1)",
+                    borderLeft: "2px solid rgba(230, 23, 7, 0.3)",
+                    borderRight: "2px solid rgba(230, 23, 7, 0.3)",
+                    position: "relative",
+                    zIndex: 2,
+                    cursor: "pointer",
+                    "&:hover": {
+                      color: "#FFFFFF",
+                      background:
+                        "linear-gradient(135deg, rgba(186, 185, 185, 0.2) 0%, rgba(230, 23, 7, 0.05) 100%)",
+                      border: "1px solid rgba(186, 185, 185, 0.3)",
+                      borderLeft: "3px solid rgba(230, 23, 7, 0.6)",
+                      borderRight: "3px solid rgba(230, 23, 7, 0.6)",
+                      transform: "translateX(8px)",
+                      boxShadow: "0px 2px 10px rgba(186, 185, 185, 0.15)",
+                    },
+
+                    animation: `slideIn 0.3s ease-out ${index * 0.1}s both`,
+                  }}
+                >
+                  <ListItemText
+                    primary={item}
+                    sx={{
+                      "& .MuiListItemText-primary": {
+                        fontFamily: '"Poppins", sans-serif',
+                        fontWeight: 500,
+                      },
+                    }}
+                  />
+                </ListItem>
+              )
+            )}
           </List>
         </Box>
       </Drawer>
@@ -359,8 +397,8 @@ const Home = () => {
           src={Logo3}
           alt="Logo3"
           style={{
-            maxWidth: "40px",
-            height: "40px",
+            maxWidth: "44px",
+            height: "44px",
           }}
         />
       </Box>
@@ -371,15 +409,16 @@ const Home = () => {
           fontFamily: "Poppins",
           fontSize: screenWidth > 776 ? "34px" : "24px",
           fontWeight: 500,
-          marginBottom: "20px",
+          marginBottom: screenWidth > 776 ? "28px" : "20px",
           opacity: visibleSections.has("partnership") ? 0.95 : 0,
           color: "#BAB9B9",
-          marginTop: "15px",
+          marginTop: screenWidth > 776 ? "20px" : "15px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           padding: "10px",
-          background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
+          background:
+            "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
@@ -468,71 +507,6 @@ const Home = () => {
       </Typography>
 
       <Typography
-        ref={sponsorsRef}
-        variant="body1"
-        sx={{
-          fontFamily: "Poppins",
-          fontSize: screenWidth > 776 ? "40px" : "28px",
-          fontWeight: 500,
-          marginBottom: "20px",
-          opacity: visibleSections.has("sponsors") ? 0.95 : 0,
-          color: "#BAB9B9",
-          marginTop: screenWidth > 776 ? "120px" : "100px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-          filter: "drop-shadow(0px 2px 4px rgba(0,0,0,0.15))",
-          letterSpacing: "0.4px",
-          transform: visibleSections.has("sponsors")
-            ? "translateY(0)"
-            : "translateY(30px)",
-          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
-      >
-        Our Sponsors
-      </Typography>
-
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: screenWidth > 776 ? "100px" : "50px",
-          marginTop: "40px",
-          padding: screenWidth > 776 ? "15px" : "30px",
-        }}
-      >
-        {[1, 2, 3, 4, 5].map((item, index) => (
-          <Box
-            key={item}
-            sx={{
-              width: screenWidth > 776 ? "115px" : "70px",
-              height: screenWidth > 776 ? "115px" : "70px",
-              borderRadius: "50%",
-              backgroundColor: "#D9D9D966",
-              flex: "0 0 auto",
-              opacity: visibleSections.has("sponsors") ? 1 : 0,
-              transform: visibleSections.has("sponsors")
-                ? "scale(1) rotate(0deg)"
-                : `scale(0) rotate(${180 + index * 30}deg)`,
-              transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
-              transitionDelay: visibleSections.has("sponsors")
-                ? `${index * 0.15}s`
-                : "0s",
-              boxShadow: visibleSections.has("sponsors")
-                ? "0px 4px 20px rgba(217, 217, 217, 0.3)"
-                : "none",
-            }}
-          />
-        ))}
-      </Box>
-
-      <Typography
         ref={agendaRef}
         variant="body1"
         sx={{
@@ -546,7 +520,8 @@ const Home = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
+          background:
+            "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
@@ -622,7 +597,7 @@ const Home = () => {
           style={{
             maxWidth: getMaxWidth(),
             width: screenWidth > 992 ? "120%" : "210%",
-            height: "100%"
+            height: "100%",
           }}
         />
       </Box>
@@ -637,7 +612,7 @@ const Home = () => {
           marginBottom: "20px",
           opacity: visibleSections.has("location") ? 0.95 : 0,
           color: "#BAB9B9",
-          marginTop: screenWidth > 776 ? "-30px" : "-40px",
+          marginTop: screenWidth > 776 ? "10px" : "00px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -647,7 +622,8 @@ const Home = () => {
           `,
           letterSpacing: "0.4px",
           lineHeight: 1.1,
-          background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
+          background:
+            "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
@@ -689,6 +665,10 @@ const Home = () => {
       </Typography>
 
       <Box
+        component="a"
+        href="https://maps.app.goo.gl/3Z6EwKBr1oETtz4g6"
+        target="_blank"
+        rel="noopener noreferrer"
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -700,6 +680,7 @@ const Home = () => {
             ? "translateX(0)"
             : "translateX(50px)",
           transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s",
+          cursor: "pointer",
         }}
       >
         <img
@@ -842,7 +823,8 @@ const Home = () => {
               `,
               letterSpacing: "0.5px",
               lineHeight: 1.1,
-              background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
+              background:
+                "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -883,17 +865,17 @@ const Home = () => {
               animationDelay="0s"
             />
 
-            {/* Hours */}
+            {/* Minutes */}
             <CountdownCard
-              label="Hours"
+              label="Minutes"
               screenWidth={screenWidth}
               gradientAngle={162.418}
               animationDelay="0.2s"
             />
 
-            {/* Minutes */}
+            {/* Seconds */}
             <CountdownCard
-              label="Minute"
+              label="Seconds"
               screenWidth={screenWidth}
               gradientAngle={165.157}
               animationDelay="0.4s"
@@ -903,22 +885,23 @@ const Home = () => {
             variant="body1"
             sx={{
               fontFamily: "Poppins",
-              fontSize: screenWidth > 776 ? "40px" : "20px",
+              fontSize: screenWidth > 776 ? "36px" : "18px",
               fontWeight: 600,
-              marginBottom: screenWidth > 776 ? "20px" : "10px",
+              marginBottom: screenWidth > 776 ? "36px" : "30px",
               opacity: 0.95,
               color: "#BAB9B9",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: screenWidth > 776 ? "60px" : "60px",
+              marginTop: screenWidth > 776 ? "60px" : "26px",
               textShadow: `
                 0px 1px 2px rgba(0,0,0,0.3),
                 0px 0px 20px rgba(186,185,185,0.1)
               `,
               letterSpacing: "0.3px",
               lineHeight: 1.2,
-              background: "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
+              background:
+                "linear-gradient(90deg, #ffffff 0%, #f2f2f2 30%, #dfdfdf 60%, #c8c8c9 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -932,20 +915,25 @@ const Home = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: "20px",
+              paddingBottom: "50px",
             }}
           >
             <Button
+              component="a"
+              href="https://tripetto.app/run/W2DH3X7OBR"
+              target="_blank"
+              rel="noopener noreferrer"
               variant="contained"
               sx={{
                 position: "relative",
                 borderRadius: "30px",
-                padding: "12px 30px",
+                padding: "15px 44px",
                 fontSize: "12px",
                 fontFamily: "'Poppins', sans-serif",
                 fontWeight: 600,
                 textTransform: "none",
                 color: "#ffffff",
+
                 background:
                   "radial-gradient(ellipse 15px 3px at 50% 50%, rgba(168,26,19,1) 0%, rgba(230,23,7,1) 100%)",
                 boxShadow: `
@@ -1012,7 +1000,7 @@ const Home = () => {
           </Box>
         </Box>
       </Box>
-      <Footer sx={{marginTop: screenWidth > 776 ? "-180px" : "-50px"}} />
+      <Footer sx={{ marginTop: screenWidth > 776 ? "-180px" : "-50px" }} />
     </Box>
   );
 };
