@@ -1,11 +1,8 @@
 {
-  "homepage": "https://Lafdal-walid.github.io/ItcRegistration",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d build",
   "name": "myapp",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
+    "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.6",
@@ -28,7 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build --remote=origin --branch=gh-pages --message='Deploy GitHub Pages'"
   },
   "eslintConfig": {
     "extends": [

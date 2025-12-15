@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box } from "@mui/material";
-import Logo from "../assets/Logo.svg";
+import Logo from "../assets/Logo-Combo-1.png";
 import { ThemeProvider } from "@emotion/react";
 import theme from "../theme.js";
 
@@ -99,10 +99,12 @@ const NavHead = () => {
           <Box
             component="img"
             src={Logo}
+            alt="ITCP 4.0 Logo"
             sx={{
               width: "40px",
               height: "45px",
               marginTop: "7px",
+              objectFit: "contain",
             }}
           />
         </Box>
